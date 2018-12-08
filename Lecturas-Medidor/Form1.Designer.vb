@@ -23,12 +23,12 @@ Partial Class Form1
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle37 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle38 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle39 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle40 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle41 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle42 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.btnBuscar = New System.Windows.Forms.Button()
         Me.btnNuevo = New System.Windows.Forms.Button()
         Me.btnExportUnit = New System.Windows.Forms.Button()
@@ -48,11 +48,11 @@ Partial Class Form1
         Me.Label4 = New System.Windows.Forms.Label()
         Me.lbArchivos = New System.Windows.Forms.ListBox()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.lblprueba = New System.Windows.Forms.Label()
         Me.cbotipomedidor = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.txtruta = New System.Windows.Forms.TextBox()
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
+        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.GroupBox4.SuspendLayout()
         CType(Me.dgvcontenido, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox3.SuspendLayout()
@@ -144,8 +144,8 @@ Partial Class Form1
         '
         'Column1
         '
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column1.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle37.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column1.DefaultCellStyle = DataGridViewCellStyle37
         Me.Column1.HeaderText = "Mes"
         Me.Column1.Name = "Column1"
         Me.Column1.ReadOnly = True
@@ -153,8 +153,8 @@ Partial Class Form1
         '
         'Column2
         '
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column2.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle38.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column2.DefaultCellStyle = DataGridViewCellStyle38
         Me.Column2.HeaderText = "Código de Empresa"
         Me.Column2.Name = "Column2"
         Me.Column2.ReadOnly = True
@@ -162,8 +162,8 @@ Partial Class Form1
         '
         'Column3
         '
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column3.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle39.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column3.DefaultCellStyle = DataGridViewCellStyle39
         Me.Column3.HeaderText = "Código de Suministro"
         Me.Column3.Name = "Column3"
         Me.Column3.ReadOnly = True
@@ -171,8 +171,8 @@ Partial Class Form1
         '
         'Column4
         '
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column4.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle40.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column4.DefaultCellStyle = DataGridViewCellStyle40
         Me.Column4.HeaderText = "Código de Barra de Compra"
         Me.Column4.Name = "Column4"
         Me.Column4.ReadOnly = True
@@ -181,8 +181,8 @@ Partial Class Form1
         'Column5
         '
         Me.Column5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column5.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle41.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column5.DefaultCellStyle = DataGridViewCellStyle41
         Me.Column5.HeaderText = "Fecha /Hora"
         Me.Column5.Name = "Column5"
         Me.Column5.ReadOnly = True
@@ -190,8 +190,8 @@ Partial Class Form1
         '
         'Column6
         '
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column6.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle42.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column6.DefaultCellStyle = DataGridViewCellStyle42
         Me.Column6.HeaderText = "EA"
         Me.Column6.Name = "Column6"
         Me.Column6.ReadOnly = True
@@ -238,7 +238,6 @@ Partial Class Form1
         '
         'GroupBox1
         '
-        Me.GroupBox1.Controls.Add(Me.lblprueba)
         Me.GroupBox1.Controls.Add(Me.cbotipomedidor)
         Me.GroupBox1.Controls.Add(Me.Label1)
         Me.GroupBox1.Controls.Add(Me.txtruta)
@@ -250,20 +249,9 @@ Partial Class Form1
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Importar Datos"
         '
-        'lblprueba
-        '
-        Me.lblprueba.AutoSize = True
-        Me.lblprueba.Location = New System.Drawing.Point(6, 100)
-        Me.lblprueba.Name = "lblprueba"
-        Me.lblprueba.Size = New System.Drawing.Size(40, 13)
-        Me.lblprueba.TabIndex = 14
-        Me.lblprueba.Text = "prueba"
-        Me.lblprueba.Visible = False
-        '
         'cbotipomedidor
         '
         Me.cbotipomedidor.FormattingEnabled = True
-        Me.cbotipomedidor.Items.AddRange(New Object() {"S-1440", "A-1800", "MH-TAB"})
         Me.cbotipomedidor.Location = New System.Drawing.Point(118, 50)
         Me.cbotipomedidor.Name = "cbotipomedidor"
         Me.cbotipomedidor.RightToLeft = System.Windows.Forms.RightToLeft.No
@@ -281,12 +269,11 @@ Partial Class Form1
         '
         'txtruta
         '
-        Me.txtruta.Location = New System.Drawing.Point(52, 97)
+        Me.txtruta.Location = New System.Drawing.Point(0, 97)
         Me.txtruta.Name = "txtruta"
         Me.txtruta.ReadOnly = True
-        Me.txtruta.Size = New System.Drawing.Size(168, 20)
+        Me.txtruta.Size = New System.Drawing.Size(344, 20)
         Me.txtruta.TabIndex = 1
-        Me.txtruta.Visible = False
         '
         'ProgressBar1
         '
@@ -295,10 +282,14 @@ Partial Class Form1
         Me.ProgressBar1.Size = New System.Drawing.Size(706, 23)
         Me.ProgressBar1.TabIndex = 18
         '
+        'OpenFileDialog1
+        '
+        Me.OpenFileDialog1.FileName = "Archivo"
+        '
         'Form1
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.AccessibleRole = System.Windows.Forms.AccessibleRole.None
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.ClientSize = New System.Drawing.Size(727, 564)
         Me.Controls.Add(Me.ProgressBar1)
         Me.Controls.Add(Me.GroupBox1)
@@ -307,6 +298,7 @@ Partial Class Form1
         Me.Controls.Add(Me.btnExportMasivo)
         Me.Controls.Add(Me.btnExportUnit)
         Me.Controls.Add(Me.btnNuevo)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "Form1"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
@@ -341,9 +333,9 @@ Partial Class Form1
     Friend WithEvents Label4 As Label
     Friend WithEvents lbArchivos As ListBox
     Friend WithEvents GroupBox1 As GroupBox
-    Friend WithEvents lblprueba As Label
     Friend WithEvents cbotipomedidor As ComboBox
     Friend WithEvents Label1 As Label
     Friend WithEvents txtruta As TextBox
     Friend WithEvents ProgressBar1 As ProgressBar
+    Friend WithEvents OpenFileDialog1 As OpenFileDialog
 End Class

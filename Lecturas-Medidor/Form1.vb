@@ -305,4 +305,133 @@ Public Class Form1
         End Try
 
     End Sub
+
+    Private Sub btnExportUnit_Click(sender As Object, e As EventArgs) Handles btnExportUnit.Click
+        btnNuevo.Enabled = False
+        btnExportUnit.Enabled = False
+        btnExportMasivo.Enabled = False
+        lblarchivos.Enabled = False
+        dgvcontenido.Enabled = False
+
+        If dgvcontenido.RowCount = 0 Then Return
+
+        Application.DoEvents()
+
+        Dim DGV As New DataGridView
+
+        With DGV
+            .AllowUserToAddRows = False
+            .Name = "Procesos"
+            .Visible = False
+            .Columns.Clear()
+            .Columns.Add("Column1", "Mes")
+            .Columns.Add("Column2", "Código de Empresa")
+            .Columns.Add("Column3", "Código de Suministro")
+            .Columns.Add("Column4", "Código de Barra de Compra")
+            .Columns.Add("Column5", "Fecha / Hora")
+            .Columns.Add("Column6", "EA")
+
+        End With
+        With dgvcontenido
+            If .Rows.Count > 0 Then
+                For i As Integer = 0 To .Rows.Count - 1
+
+                    Application.DoEvents()
+                    DGV.Rows.Add(.Rows(i).Cells("Column1").Value, .Rows(i).Cells("Column2").Value,
+                                 .Rows(i).Cells("Column3").Value, .Rows(i).Cells("Column4").Value,
+                                 .Rows(i).Cells("Column5").Value, .Rows(i).Cells("Column6").Value)
+                Next
+            End If
+        End With
+        FlNm2 = Val(lbArchivos.SelectedItem)
+        'MsgBox(FlNm2, MsgBoxStyle.Information, "leyendo")
+        FlNm = "Exportados\" & FlNm2 & "--" & Now.Year & "-" & Now.Month & "-" & Now.Day & "--" & Now.Hour & "-" & Now.Minute & "-" & Now.Second & ".xls"
+        'FlNm = "Exportados\" & FlNm2 & ".xls"
+        'FlNm = Application.StartupPath & "\Student " _
+        '        & Now.Day & "-" & Now.Month & "-" & Now.Year & ".xls"
+        If File.Exists(FlNm) Then File.Delete(FlNm)
+        ExportToExcel(DGV)
+
+        DGV.Dispose()
+        DGV = Nothing
+
+        'Process.Start("Exportados\" & Now.Day & "-" & Now.Month & "-" & Now.Year & ".xls")
+        Process.Start(FlNm)
+        'Process.Start("Exportados\" & FlNm2 & ".xls")
+        btnNuevo.Enabled = True
+        btnExportUnit.Enabled = True
+        btnExportMasivo.Enabled = True
+        lblarchivos.Enabled = True
+        dgvcontenido.Enabled = True
+    End Sub
+    'EXPORTAR a EXCEL
+    Dim FlNm As String
+    Dim FlNm2 As String
+    Private Sub ExportToExcel(ByVal DGV As DataGridView)
+        Dim fs As New StreamWriter(FlNm, False)
+        With fs
+            .WriteLine("<?xml version=""1.0""?>")
+            .WriteLine("<?mso-application progid=""Excel.Sheet""?>")
+            .WriteLine("<Workbook xmlns=""urn:schemas-microsoft-com:office:spreadsheet"">")
+            .WriteLine("    <Styles>")
+            .WriteLine("        <Style ss:ID=""hdr"">")
+            .WriteLine("            <Alignment ss:Horizontal=""Center""/>")
+            .WriteLine("            <Borders>")
+            .WriteLine("                <Border ss:Position=""Left"" ss:LineStyle=""Continuous"" ss:Weight=""1""/>")
+            .WriteLine("                <Border ss:Position=""Right"" ss:LineStyle=""Continuous"" ss:Weight=""1""/>")
+            .WriteLine("                <Border ss:Position=""Top"" ss:LineStyle=""Continuous"" ss:Weight=""1""/>")
+            .WriteLine("            </Borders>")
+            .WriteLine("            <Font ss:FontName=""Calibri"" ss:Size=""11"" ss:Bold=""1""/>") 'SET FONT
+            .WriteLine("        </Style>")
+            .WriteLine("        <Style ss:ID=""ksg"">")
+            .WriteLine("            <Alignment ss:Vertical=""Bottom""/>")
+            .WriteLine("            <Borders/>")
+            .WriteLine("            <Font ss:FontName=""Calibri""/>") 'SET FONT
+            .WriteLine("        </Style>")
+            .WriteLine("        <Style ss:ID=""isi"">")
+            .WriteLine("            <Borders>")
+            .WriteLine("                <Border ss:Position=""Bottom"" ss:LineStyle=""Continuous"" ss:Weight=""1""/>")
+            .WriteLine("                <Border ss:Position=""Left"" ss:LineStyle=""Continuous"" ss:Weight=""1""/>")
+            .WriteLine("                <Border ss:Position=""Right"" ss:LineStyle=""Continuous"" ss:Weight=""1""/>")
+            .WriteLine("                <Border ss:Position=""Top"" ss:LineStyle=""Continuous"" ss:Weight=""1""/>")
+            .WriteLine("            </Borders>")
+            .WriteLine("            <Font ss:FontName=""Calibri"" ss:Size=""10""/>") 'SET FONT
+            .WriteLine("        </Style>")
+            .WriteLine("    </Styles>")
+            If DGV.Name = "Procesos" Then
+                .WriteLine("    <Worksheet ss:Name=""Procesos"">") 'SET NAMA SHEET
+                .WriteLine("        <Table>")
+                .WriteLine("            <Column ss:Width=""40""/>") '   "Mes"
+                .WriteLine("            <Column ss:Width=""93""/>") '   "Código de Empresa"
+                .WriteLine("            <Column ss:Width=""84""/>") '   "Código de Suministro"
+                .WriteLine("            <Column ss:Width=""100""/>") '  "Código de Barra de Compra"
+                .WriteLine("            <Column ss:Width=""84""/>") '   "Fecha / Hora"
+                .WriteLine("            <Column ss:Width=""90""/>") '   "EA"
+            End If
+            'AUTO SET HEADER
+            .WriteLine("            <Row ss:StyleID=""ksg"">")
+            For i As Integer = 0 To DGV.Columns.Count - 1 'SET HEADER
+                Application.DoEvents()
+                .WriteLine("            <Cell ss:StyleID=""hdr"">")
+                .WriteLine("                <Data ss:Type=""String"">{0}</Data>", DGV.Columns.Item(i).HeaderText)
+                .WriteLine("            </Cell>")
+            Next
+            .WriteLine("            </Row>")
+            For intRow As Integer = 0 To DGV.RowCount - 1
+                Application.DoEvents()
+                .WriteLine("        <Row ss:StyleID=""ksg"" ss:utoFitHeight =""0"">")
+                For intCol As Integer = 0 To DGV.Columns.Count - 1
+                    Application.DoEvents()
+                    .WriteLine("        <Cell ss:StyleID=""isi"">")
+                    .WriteLine("            <Data ss:Type=""String"">{0}</Data>", DGV.Item(intCol, intRow).Value.ToString)
+                    .WriteLine("        </Cell>")
+                Next
+                .WriteLine("        </Row>")
+            Next
+            .WriteLine("        </Table>")
+            .WriteLine("    </Worksheet>")
+            .WriteLine("</Workbook>")
+            .Close()
+        End With
+    End Sub
 End Class

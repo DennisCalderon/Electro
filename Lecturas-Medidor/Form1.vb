@@ -92,7 +92,8 @@ Public Class Form1
         ruta = ruta & lbArchivos.SelectedItem
         txtruta.Text = ruta
         'MsgBox(ruta, MsgBoxStyle.Information, "leyendo")
-        obtenertotal(dgvcontenido, ruta)
+        Dim conteo As Integer
+        obtenertotal(dgvcontenido, ruta, conteo)
 
         'diferenciar entre la exportación unitaria y la masiva
         If (exportar = 1) Then
@@ -115,7 +116,7 @@ Public Class Form1
         btnExportUnit.Enabled = True
         btnExportMasivo.Enabled = True
     End Sub
-    Sub obtenertotal(ByVal tabla As DataGridView, ByVal ruta As String)
+    Sub obtenertotal(ByVal tabla As DataGridView, ByVal ruta As String, ByRef conteo As String)
         Dim objReader As New StreamReader(ruta)
         Dim sLine As String = ""
         Dim fila As Integer = 0
@@ -134,10 +135,11 @@ Public Class Form1
         Dim tipo_archivo As Integer
         tipo_archivo = cbotipomedidor.SelectedIndex
         Select Case tipo_archivo
-            Case 0 : lblregistros.Text = fila - 4
-            Case 1 : lblregistros.Text = fila - 2
-            Case 2 : lblregistros.Text = fila - 3
+            Case 0 : conteo = fila - 4
+            Case 1 : conteo = fila - 2
+            Case 2 : conteo = fila - 3
         End Select
+        lblregistros.Text = conteo
 
         ProgressBar1.Minimum = 0
         ProgressBar1.Maximum = fila
@@ -271,7 +273,7 @@ Public Class Form1
 
 
         EA = Math.Round(EA, 5)
-        tabla.Rows.Add(mes, cod_empresa, IdMedidor, cod_barra, fech_hora, CStr(EA))
+        tabla.Rows.Add(mes, cod_empresa, IIf(IdMedidor = "", "No Existe", IdMedidor), cod_barra, fech_hora, CStr(EA))
 
     End Sub
     Sub consulta(ByVal serie As String, ByRef IdMedidor As String, ByRef FTEA As String)
@@ -433,5 +435,55 @@ Public Class Form1
             .WriteLine("</Workbook>")
             .Close()
         End With
+    End Sub
+
+    Private Sub btnExportMasivo_Click(sender As Object, e As EventArgs) Handles btnExportMasivo.Click
+
+        dgvcontenido.Rows.Clear()
+
+        lbArchivos.Enabled = False
+        btnNuevo.Enabled = False
+        btnExportMasivo.Enabled = False
+        dgvcontenido.Enabled = False
+
+        exportar = 2
+        Dim name As String
+        Dim XPos, YPos
+        XPos = Me.Width / 2
+        YPos = Me.Height / 2
+
+        name = InputBox("Ingrese un nombre del Archivo, este campo es obligatorio", "Nombra el Archivo a Exportar", "Electrosur", XPos * 1.6, YPos)
+
+        'recorrer el listbox que contiene el nombre de los archivos de lectura
+        Dim ii As Integer
+        Dim archivo As String
+        Dim conteo As Integer
+        Dim conteoT As Integer
+        For ii = 0 To lbArchivos.Items.Count - 1
+
+            archivo = lbArchivos.Items(ii)
+            'MsgBox(archivo, MsgBoxStyle.Information, "leyendo")
+
+            Dim ruta As String = ruta_general.Substring(0, (ruta_general.LastIndexOf("\") + 1))
+            ruta = ruta & archivo
+            txtruta.Text = ruta
+            'MsgBox(ruta, MsgBoxStyle.Information, "leyendo")
+            obtenertotal(dgvcontenido, ruta, conteo)
+            conteoT = conteo + conteoT
+            'MsgBox(conteoT, MsgBoxStyle.Information, "leyendo")
+            'diferenciar entre la exportación unitaria y la masiva
+            If (exportar = 1) Then
+                dgvcontenido.Rows.Clear()
+            End If
+            'MsgBox(archivo, MsgBoxStyle.Information, "leyendo")
+
+        Next ii
+        MsgBox(conteoT, MsgBoxStyle.Information, "leyendo")
+
+        lbArchivos.Enabled = True
+        btnNuevo.Enabled = True
+        btnExportMasivo.Enabled = True
+        dgvcontenido.Enabled = True
+        exportar = 1
     End Sub
 End Class

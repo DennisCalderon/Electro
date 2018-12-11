@@ -3,6 +3,8 @@ Imports System.Data.SQLite
 Public Class Form1
     Const cadena_conexion As String = "Data Source=Electro.db;Version=3"
     Dim exportar As Integer = 1
+    Dim conteoTotal As Integer = 1
+    Dim registrosTotales As Integer
     Dim ruta_general As String
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -93,7 +95,8 @@ Public Class Form1
         txtruta.Text = ruta
         'MsgBox(ruta, MsgBoxStyle.Information, "leyendo")
         Dim conteo As Integer
-        obtenertotal(dgvcontenido, ruta, conteo)
+        Dim filasT As Integer ' este solo se usara para el conteo total de registros
+        obtenertotal(dgvcontenido, ruta, conteo, filasT)
 
         'diferenciar entre la exportación unitaria y la masiva
         If (exportar = 1) Then
@@ -104,9 +107,9 @@ Public Class Form1
         Dim tipo_archivo As Integer
         tipo_archivo = cbotipomedidor.SelectedIndex
         Select Case tipo_archivo
-            Case 0 : lecturaArchivo(dgvcontenido, ruta, " ", 2)
-            Case 1 : lecturaArchivo(dgvcontenido, ruta, ",", 0)
-            Case 2 : lecturaArchivo(dgvcontenido, ruta, vbTab, 1)
+            Case 0 : lecturaArchivo(dgvcontenido, ruta, " ", 2, 0)
+            Case 1 : lecturaArchivo(dgvcontenido, ruta, ",", 0, 0)
+            Case 2 : lecturaArchivo(dgvcontenido, ruta, vbTab, 1, 0)
         End Select
 
         'MsgBox(lbArchivos.SelectedItem, MsgBoxStyle.Information, "leyendo")
@@ -116,7 +119,7 @@ Public Class Form1
         btnExportUnit.Enabled = True
         btnExportMasivo.Enabled = True
     End Sub
-    Sub obtenertotal(ByVal tabla As DataGridView, ByVal ruta As String, ByRef conteo As String)
+    Sub obtenertotal(ByVal tabla As DataGridView, ByVal ruta As String, ByRef conteo As String, ByRef filasT As Integer)
         Dim objReader As New StreamReader(ruta)
         Dim sLine As String = ""
         Dim fila As Integer = 0
@@ -132,6 +135,7 @@ Public Class Form1
 
         Loop Until sLine Is Nothing
 
+        filasT = fila
         Dim tipo_archivo As Integer
         tipo_archivo = cbotipomedidor.SelectedIndex
         Select Case tipo_archivo
@@ -139,13 +143,17 @@ Public Class Form1
             Case 1 : conteo = fila - 2
             Case 2 : conteo = fila - 3
         End Select
-        lblregistros.Text = conteo
 
-        ProgressBar1.Minimum = 0
-        ProgressBar1.Maximum = fila
+        If exportar = 1 Then
+            lblregistros.Text = conteo
+
+            ProgressBar1.Minimum = 0
+            ProgressBar1.Maximum = fila
+        End If
+
         objReader.Close()
     End Sub
-    Sub lecturaArchivo(ByVal tabla As DataGridView, ByVal ruta As String, ByVal caracter As String, ByVal numfila As Integer)
+    Sub lecturaArchivo(ByVal tabla As DataGridView, ByVal ruta As String, ByVal caracter As String, ByVal numfila As Integer, ByRef medidor As String)
         Dim objReader As New StreamReader(ruta)
         Dim sLine As String = ""
         Dim fila As Integer = 0
@@ -160,7 +168,12 @@ Public Class Form1
             If Not sLine Is Nothing Then
 
                 If fila = 0 Then
-                    id_medidor = CInt(Val(lbArchivos.SelectedItem))
+                    If exportar = 2 Then
+                        id_medidor = medidor
+                    Else
+                        id_medidor = CInt(Val(lbArchivos.SelectedItem))
+                    End If
+
                     'id_medidor = CInt(id_medidor)
                     'MsgBox(id_medidor, MsgBoxStyle.Information, "leyendo")
                     fila += 1
@@ -178,13 +191,23 @@ Public Class Form1
                 'MsgBox(id_medidor, MsgBoxStyle.Information, "leyendo")
 
             End If
-            ProgressBar1.Value = fila2
+            If exportar = 1 Then
+                ProgressBar1.Value = fila2
+            End If
+            If exportar = 2 Then
+                conteoTotal = conteoTotal + 1
+                ProgressBar1.Value = conteoTotal
+            End If
+
 
         Loop Until sLine Is Nothing
 
         'MsgBox(fila2, MsgBoxStyle.Information, "leyendo")
         objReader.Close()
-        ProgressBar1.Value = 0
+        If exportar = 1 Then
+            ProgressBar1.Value = 0
+        End If
+
     End Sub
     Sub agregarFilaCaso(ByVal tabla As DataGridView, ByVal linea As String, ByVal caracter As String, ByVal id_medidor As Integer)
         Dim arreglo() As String = linea.Split(caracter)
@@ -323,7 +346,7 @@ Public Class Form1
 
         With DGV
             .AllowUserToAddRows = False
-            .Name = "Procesos"
+            .Name = "Hoja"
             .Visible = False
             .Columns.Clear()
             .Columns.Add("Column1", "Mes")
@@ -352,6 +375,7 @@ Public Class Form1
         'FlNm = Application.StartupPath & "\Student " _
         '        & Now.Day & "-" & Now.Month & "-" & Now.Year & ".xls"
         If File.Exists(FlNm) Then File.Delete(FlNm)
+        'MsgBox("stop", MsgBoxStyle.Information, "leyendo")
         ExportToExcel(DGV)
 
         DGV.Dispose()
@@ -400,8 +424,9 @@ Public Class Form1
             .WriteLine("            <Font ss:FontName=""Calibri"" ss:Size=""10""/>") 'SET FONT
             .WriteLine("        </Style>")
             .WriteLine("    </Styles>")
-            If DGV.Name = "Procesos" Then
-                .WriteLine("    <Worksheet ss:Name=""Procesos"">") 'SET NAMA SHEET
+
+            If DGV.Name = "Hoja" Then
+                .WriteLine("    <Worksheet ss:Name=""Hoja1"">") 'SET NAMA SHEET
                 .WriteLine("        <Table>")
                 .WriteLine("            <Column ss:Width=""40""/>") '   "Mes"
                 .WriteLine("            <Column ss:Width=""93""/>") '   "Código de Empresa"
@@ -419,6 +444,7 @@ Public Class Form1
                 .WriteLine("            </Cell>")
             Next
             .WriteLine("            </Row>")
+
             For intRow As Integer = 0 To DGV.RowCount - 1
                 Application.DoEvents()
                 .WriteLine("        <Row ss:StyleID=""ksg"" ss:utoFitHeight =""0"">")
@@ -432,7 +458,9 @@ Public Class Form1
             Next
             .WriteLine("        </Table>")
             .WriteLine("    </Worksheet>")
-            .WriteLine("</Workbook>")
+            If exportar = 1 Then
+                .WriteLine("</Workbook>")
+            End If
             .Close()
         End With
     End Sub
@@ -459,6 +487,12 @@ Public Class Form1
         Dim archivo As String
         Dim conteo As Integer
         Dim conteoT As Integer
+
+        Dim filasT As Integer
+        Dim filasTotales As Integer
+        Dim abrirexcel As String
+
+        ' obtener el total de registros
         For ii = 0 To lbArchivos.Items.Count - 1
 
             archivo = lbArchivos.Items(ii)
@@ -467,9 +501,11 @@ Public Class Form1
             Dim ruta As String = ruta_general.Substring(0, (ruta_general.LastIndexOf("\") + 1))
             ruta = ruta & archivo
             txtruta.Text = ruta
+
             'MsgBox(ruta, MsgBoxStyle.Information, "leyendo")
-            obtenertotal(dgvcontenido, ruta, conteo)
+            obtenertotal(dgvcontenido, ruta, conteo, filasT)
             conteoT = conteo + conteoT
+            filasTotales = filasT + filasTotales
             'MsgBox(conteoT, MsgBoxStyle.Information, "leyendo")
             'diferenciar entre la exportación unitaria y la masiva
             If (exportar = 1) Then
@@ -478,12 +514,173 @@ Public Class Form1
             'MsgBox(archivo, MsgBoxStyle.Information, "leyendo")
 
         Next ii
-        MsgBox(conteoT, MsgBoxStyle.Information, "leyendo")
+
+        registrosTotales = filasTotales
+        ProgressBar1.Minimum = 0
+        ProgressBar1.Maximum = filasTotales * 1.007
+        MsgBox(conteoT, MsgBoxStyle.Information, "El Total de Lecturas es:")
+        'MsgBox(lbArchivos.Items.Count - 1, MsgBoxStyle.Information, "leyendo")
+
+        Dim numexport As Integer = 1
+        Dim numhoja As Integer = 1
+        Dim num As Integer = 2
+        Dim id_medidor As String
+        'dividir el contenido en hojas y agregar el sobrante
+        Dim divisor As Integer
+        Dim dividirEnHojas As Integer
+        Dim contar As Integer = 0
+
+        dividirEnHojas = 5 ' modificar el numero de archivos que se tomaran por hoja
+        divisor = Math.Truncate(lbArchivos.Items.Count / dividirEnHojas)
+        'MsgBox(divisor, MsgBoxStyle.Information, "leyendo")
+        Dim DGVTotal As New DataGridView
+        With DGVTotal
+            .AllowUserToAddRows = False
+            .Name = "Hoja"
+            .Visible = False
+            .Columns.Clear()
+            .Columns.Add("Column1", "Mes")
+            .Columns.Add("Column2", "Código de Empresa")
+            .Columns.Add("Column3", "Código de Suministro")
+            .Columns.Add("Column4", "Código de Barra de Compra")
+            .Columns.Add("Column5", "Fecha / Hora")
+            .Columns.Add("Column6", "EA")
+        End With
+
+        For ii = 0 To lbArchivos.Items.Count - 1
+
+            archivo = lbArchivos.Items(ii)
+            'MsgBox(archivo, MsgBoxStyle.Information, "leyendo")
+            'MsgBox("uno", MsgBoxStyle.Information, "leyendo")
+
+            Dim ruta As String = ruta_general.Substring(0, (ruta_general.LastIndexOf("\") + 1))
+            ruta = ruta & archivo
+            'MsgBox(ruta, MsgBoxStyle.Information, "leyendo")
+
+            id_medidor = CInt(Val(lbArchivos.Items.Item(ii)))
+
+            Dim tipo_archivo As Integer
+            tipo_archivo = cbotipomedidor.SelectedIndex
+            Select Case tipo_archivo
+                Case 0 : lecturaArchivo(DGVTotal, ruta, " ", 2, id_medidor)
+                Case 1 : lecturaArchivo(DGVTotal, ruta, ",", 0, id_medidor)
+                Case 2 : lecturaArchivo(DGVTotal, ruta, vbTab, 1, id_medidor)
+            End Select
+            numhoja = numhoja + 1
+            'MsgBox(numhoja, MsgBoxStyle.Information, "leyendo")
+
+            If numhoja > dividirEnHojas Then
+                'MsgBox("dos", MsgBoxStyle.Information, "leyendo")
+                If numexport = 2 Then
+                    'MsgBox("cuatro", MsgBoxStyle.Information, "leyendo")
+                    'If File.Exists(FlNm) Then File.Delete(FlNm)
+                    AddExcel(DGVTotal, num)
+
+                    DGVTotal.Rows.Clear()
+                    num = num + 1
+                    numhoja = 1
+                End If
+
+                If numexport = 1 Then
+                    'MsgBox("tres", MsgBoxStyle.Information, "leyendo")
+                    'exportar a EXCEL
+                    FlNm2 = name
+                    'MsgBox(FlNm2, MsgBoxStyle.Information, "leyendo")
+                    FlNm = "Exportados\" & FlNm2 & "--" & Now.Year & "-" & Now.Month & "-" & Now.Day & "--" & Now.Hour & "-" & Now.Minute & "-" & Now.Second & ".xls"
+                    If File.Exists(FlNm) Then File.Delete(FlNm)
+                    abrirexcel = FlNm
+                    ExportToExcel(DGVTotal)
+
+                    DGVTotal.Rows.Clear()
+                    'Process.Start(FlNm)
+                    numexport = 2
+                    numhoja = 1
+                End If
+
+            End If
+            'MsgBox(contar, MsgBoxStyle.Information, "leyendo")
+            If contar > ((divisor * dividirEnHojas) - 1) Then
+                'MsgBox("uno", MsgBoxStyle.Information, "leyendo")
+                If contar = lbArchivos.Items.Count - 1 Then
+                    'MsgBox("dos", MsgBoxStyle.Information, "leyendo")
+                    'MsgBox(num, MsgBoxStyle.Information, "leyendo")
+                    AddExcel(DGVTotal, num)
+                End If
+            End If
+            contar = contar + 1
+        Next ii
+        Dim fs As New StreamWriter(FlNm, True)
+        With fs
+            .WriteLine("</Workbook>")
+            .Close()
+        End With
+        'Process.Start("Exportados\" & Now.Day & "-" & Now.Month & "-" & Now.Year & ".xls")
+        Process.Start(abrirexcel)
 
         lbArchivos.Enabled = True
         btnNuevo.Enabled = True
         btnExportMasivo.Enabled = True
         dgvcontenido.Enabled = True
         exportar = 1
+        ProgressBar1.Value = 0
+        conteoTotal = 0
+    End Sub
+    Private Sub AddExcel(ByVal DGV As DataGridView, ByVal num As Integer)
+        Dim fs As New StreamWriter(FlNm, True)
+        Dim nombre As String
+        nombre = "Hoja" & num
+        With fs
+            If DGV.Name = "Hoja" Then
+                .WriteLine("    <Worksheet ss:Name=""" & nombre & """>") 'SET NAMA SHEET
+                .WriteLine("        <Table>")
+                .WriteLine("            <Column ss:Width=""40""/>") '   "Mes"
+                .WriteLine("            <Column ss:Width=""93""/>") '   "Código de Empresa"
+                .WriteLine("            <Column ss:Width=""84""/>") '   "Código de Suministro"
+                .WriteLine("            <Column ss:Width=""100""/>") '  "Código de Barra de Compra"
+                .WriteLine("            <Column ss:Width=""84""/>") '   "Fecha / Hora"
+                .WriteLine("            <Column ss:Width=""90""/>") '   "EA"
+            End If
+            'AUTO SET HEADER
+            .WriteLine("            <Row ss:StyleID=""ksg"">")
+            For i As Integer = 0 To DGV.Columns.Count - 1 'SET HEADER
+                Application.DoEvents()
+                .WriteLine("            <Cell ss:StyleID=""hdr"">")
+                .WriteLine("                <Data ss:Type=""String"">{0}</Data>", DGV.Columns.Item(i).HeaderText)
+                .WriteLine("            </Cell>")
+            Next
+            .WriteLine("            </Row>")
+
+            For intRow As Integer = 0 To DGV.RowCount - 1
+                Application.DoEvents()
+                .WriteLine("        <Row ss:StyleID=""ksg"" ss:utoFitHeight =""0"">")
+                For intCol As Integer = 0 To DGV.Columns.Count - 1
+                    Application.DoEvents()
+                    .WriteLine("        <Cell ss:StyleID=""isi"">")
+                    .WriteLine("            <Data ss:Type=""String"">{0}</Data>", DGV.Item(intCol, intRow).Value.ToString)
+                    .WriteLine("        </Cell>")
+                Next
+                .WriteLine("        </Row>")
+            Next
+            .WriteLine("        </Table>")
+            .WriteLine("    </Worksheet>")
+            .Close()
+        End With
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Dim nombre As String
+        nombre = lbArchivos.Items.Item(2)
+        MsgBox(nombre)
+    End Sub
+
+    Private Sub Form1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles MyBase.KeyPress
+
+    End Sub
+
+    Private Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+        If e.KeyData = Keys.F1 Then
+            MsgBox("buena")
+        End If
+
     End Sub
 End Class

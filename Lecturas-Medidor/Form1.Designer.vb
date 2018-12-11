@@ -23,12 +23,12 @@ Partial Class Form1
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
-        Dim DataGridViewCellStyle25 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle26 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle27 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle28 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle29 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle30 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.btnBuscar = New System.Windows.Forms.Button()
         Me.btnNuevo = New System.Windows.Forms.Button()
         Me.btnExportUnit = New System.Windows.Forms.Button()
@@ -54,10 +54,14 @@ Partial Class Form1
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.Button1 = New System.Windows.Forms.Button()
+        Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
+        Me.ActualizarMedidoresToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AyudaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.GroupBox4.SuspendLayout()
         CType(Me.dgvcontenido, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
+        Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'btnBuscar
@@ -74,7 +78,7 @@ Partial Class Form1
         'btnNuevo
         '
         Me.btnNuevo.Image = CType(resources.GetObject("btnNuevo.Image"), System.Drawing.Image)
-        Me.btnNuevo.Location = New System.Drawing.Point(378, 27)
+        Me.btnNuevo.Location = New System.Drawing.Point(378, 69)
         Me.btnNuevo.Name = "btnNuevo"
         Me.btnNuevo.Size = New System.Drawing.Size(79, 86)
         Me.btnNuevo.TabIndex = 1
@@ -85,7 +89,7 @@ Partial Class Form1
         'btnExportUnit
         '
         Me.btnExportUnit.Image = CType(resources.GetObject("btnExportUnit.Image"), System.Drawing.Image)
-        Me.btnExportUnit.Location = New System.Drawing.Point(483, 27)
+        Me.btnExportUnit.Location = New System.Drawing.Point(483, 69)
         Me.btnExportUnit.Name = "btnExportUnit"
         Me.btnExportUnit.Size = New System.Drawing.Size(106, 86)
         Me.btnExportUnit.TabIndex = 2
@@ -96,7 +100,7 @@ Partial Class Form1
         'btnExportMasivo
         '
         Me.btnExportMasivo.Image = CType(resources.GetObject("btnExportMasivo.Image"), System.Drawing.Image)
-        Me.btnExportMasivo.Location = New System.Drawing.Point(610, 27)
+        Me.btnExportMasivo.Location = New System.Drawing.Point(610, 69)
         Me.btnExportMasivo.Name = "btnExportMasivo"
         Me.btnExportMasivo.Size = New System.Drawing.Size(106, 86)
         Me.btnExportMasivo.TabIndex = 3
@@ -109,9 +113,9 @@ Partial Class Form1
         Me.GroupBox4.Controls.Add(Me.lblregistros)
         Me.GroupBox4.Controls.Add(Me.Label5)
         Me.GroupBox4.Controls.Add(Me.dgvcontenido)
-        Me.GroupBox4.Location = New System.Drawing.Point(230, 140)
+        Me.GroupBox4.Location = New System.Drawing.Point(230, 182)
         Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(486, 374)
+        Me.GroupBox4.Size = New System.Drawing.Size(486, 352)
         Me.GroupBox4.TabIndex = 16
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Registros del Medidor"
@@ -119,7 +123,7 @@ Partial Class Form1
         'lblregistros
         '
         Me.lblregistros.AutoSize = True
-        Me.lblregistros.Location = New System.Drawing.Point(169, 33)
+        Me.lblregistros.Location = New System.Drawing.Point(198, 20)
         Me.lblregistros.Name = "lblregistros"
         Me.lblregistros.Size = New System.Drawing.Size(13, 13)
         Me.lblregistros.TabIndex = 13
@@ -128,7 +132,7 @@ Partial Class Form1
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(44, 33)
+        Me.Label5.Location = New System.Drawing.Point(73, 20)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(120, 13)
         Me.Label5.TabIndex = 14
@@ -138,15 +142,15 @@ Partial Class Form1
         '
         Me.dgvcontenido.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvcontenido.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2, Me.Column3, Me.Column4, Me.Column5, Me.Column6})
-        Me.dgvcontenido.Location = New System.Drawing.Point(5, 63)
+        Me.dgvcontenido.Location = New System.Drawing.Point(5, 41)
         Me.dgvcontenido.Name = "dgvcontenido"
         Me.dgvcontenido.Size = New System.Drawing.Size(475, 301)
         Me.dgvcontenido.TabIndex = 11
         '
         'Column1
         '
-        DataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column1.DefaultCellStyle = DataGridViewCellStyle25
+        DataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column1.DefaultCellStyle = DataGridViewCellStyle13
         Me.Column1.HeaderText = "Mes"
         Me.Column1.Name = "Column1"
         Me.Column1.ReadOnly = True
@@ -154,8 +158,8 @@ Partial Class Form1
         '
         'Column2
         '
-        DataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column2.DefaultCellStyle = DataGridViewCellStyle26
+        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column2.DefaultCellStyle = DataGridViewCellStyle14
         Me.Column2.HeaderText = "Código de Empresa"
         Me.Column2.Name = "Column2"
         Me.Column2.ReadOnly = True
@@ -163,8 +167,8 @@ Partial Class Form1
         '
         'Column3
         '
-        DataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column3.DefaultCellStyle = DataGridViewCellStyle27
+        DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column3.DefaultCellStyle = DataGridViewCellStyle15
         Me.Column3.HeaderText = "Código de Suministro"
         Me.Column3.Name = "Column3"
         Me.Column3.ReadOnly = True
@@ -172,8 +176,8 @@ Partial Class Form1
         '
         'Column4
         '
-        DataGridViewCellStyle28.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column4.DefaultCellStyle = DataGridViewCellStyle28
+        DataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column4.DefaultCellStyle = DataGridViewCellStyle16
         Me.Column4.HeaderText = "Código de Barra de Compra"
         Me.Column4.Name = "Column4"
         Me.Column4.ReadOnly = True
@@ -182,8 +186,8 @@ Partial Class Form1
         'Column5
         '
         Me.Column5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        DataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column5.DefaultCellStyle = DataGridViewCellStyle29
+        DataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column5.DefaultCellStyle = DataGridViewCellStyle17
         Me.Column5.HeaderText = "Fecha /Hora"
         Me.Column5.Name = "Column5"
         Me.Column5.ReadOnly = True
@@ -191,8 +195,8 @@ Partial Class Form1
         '
         'Column6
         '
-        DataGridViewCellStyle30.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column6.DefaultCellStyle = DataGridViewCellStyle30
+        DataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column6.DefaultCellStyle = DataGridViewCellStyle18
         Me.Column6.HeaderText = "EA"
         Me.Column6.Name = "Column6"
         Me.Column6.ReadOnly = True
@@ -203,9 +207,9 @@ Partial Class Form1
         Me.GroupBox3.Controls.Add(Me.lblarchivos)
         Me.GroupBox3.Controls.Add(Me.Label4)
         Me.GroupBox3.Controls.Add(Me.lbArchivos)
-        Me.GroupBox3.Location = New System.Drawing.Point(10, 140)
+        Me.GroupBox3.Location = New System.Drawing.Point(12, 182)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(211, 375)
+        Me.GroupBox3.Size = New System.Drawing.Size(211, 353)
         Me.GroupBox3.TabIndex = 15
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Archivos"
@@ -213,7 +217,7 @@ Partial Class Form1
         'lblarchivos
         '
         Me.lblarchivos.AutoSize = True
-        Me.lblarchivos.Location = New System.Drawing.Point(139, 25)
+        Me.lblarchivos.Location = New System.Drawing.Point(139, 10)
         Me.lblarchivos.Name = "lblarchivos"
         Me.lblarchivos.Size = New System.Drawing.Size(13, 13)
         Me.lblarchivos.TabIndex = 11
@@ -222,7 +226,7 @@ Partial Class Form1
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(14, 25)
+        Me.Label4.Location = New System.Drawing.Point(14, 10)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(117, 13)
         Me.Label4.TabIndex = 12
@@ -231,7 +235,7 @@ Partial Class Form1
         'lbArchivos
         '
         Me.lbArchivos.FormattingEnabled = True
-        Me.lbArchivos.Location = New System.Drawing.Point(8, 51)
+        Me.lbArchivos.Location = New System.Drawing.Point(8, 29)
         Me.lbArchivos.Name = "lbArchivos"
         Me.lbArchivos.ScrollAlwaysVisible = True
         Me.lbArchivos.Size = New System.Drawing.Size(191, 316)
@@ -243,7 +247,7 @@ Partial Class Form1
         Me.GroupBox1.Controls.Add(Me.Label1)
         Me.GroupBox1.Controls.Add(Me.txtruta)
         Me.GroupBox1.Controls.Add(Me.btnBuscar)
-        Me.GroupBox1.Location = New System.Drawing.Point(10, 8)
+        Me.GroupBox1.Location = New System.Drawing.Point(10, 50)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(350, 121)
         Me.GroupBox1.TabIndex = 17
@@ -279,7 +283,7 @@ Partial Class Form1
         '
         'ProgressBar1
         '
-        Me.ProgressBar1.Location = New System.Drawing.Point(10, 529)
+        Me.ProgressBar1.Location = New System.Drawing.Point(10, 538)
         Me.ProgressBar1.Name = "ProgressBar1"
         Me.ProgressBar1.Size = New System.Drawing.Size(706, 23)
         Me.ProgressBar1.TabIndex = 18
@@ -290,13 +294,35 @@ Partial Class Form1
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(513, 120)
+        Me.Button1.Location = New System.Drawing.Point(513, 162)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 23)
         Me.Button1.TabIndex = 19
         Me.Button1.Text = "Button1"
         Me.Button1.UseVisualStyleBackColor = True
         Me.Button1.Visible = False
+        '
+        'MenuStrip1
+        '
+        Me.MenuStrip1.BackColor = System.Drawing.Color.Silver
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ActualizarMedidoresToolStripMenuItem, Me.AyudaToolStripMenuItem})
+        Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
+        Me.MenuStrip1.Name = "MenuStrip1"
+        Me.MenuStrip1.Size = New System.Drawing.Size(727, 24)
+        Me.MenuStrip1.TabIndex = 20
+        Me.MenuStrip1.Text = "MenuStrip1"
+        '
+        'ActualizarMedidoresToolStripMenuItem
+        '
+        Me.ActualizarMedidoresToolStripMenuItem.Name = "ActualizarMedidoresToolStripMenuItem"
+        Me.ActualizarMedidoresToolStripMenuItem.Size = New System.Drawing.Size(133, 20)
+        Me.ActualizarMedidoresToolStripMenuItem.Text = "Actualizar  Medidores"
+        '
+        'AyudaToolStripMenuItem
+        '
+        Me.AyudaToolStripMenuItem.Name = "AyudaToolStripMenuItem"
+        Me.AyudaToolStripMenuItem.Size = New System.Drawing.Size(53, 20)
+        Me.AyudaToolStripMenuItem.Text = "Ayuda"
         '
         'Form1
         '
@@ -312,7 +338,10 @@ Partial Class Form1
         Me.Controls.Add(Me.btnExportMasivo)
         Me.Controls.Add(Me.btnExportUnit)
         Me.Controls.Add(Me.btnNuevo)
+        Me.Controls.Add(Me.MenuStrip1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.KeyPreview = True
+        Me.MainMenuStrip = Me.MenuStrip1
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Form1"
@@ -325,7 +354,10 @@ Partial Class Form1
         Me.GroupBox3.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
+        Me.MenuStrip1.ResumeLayout(False)
+        Me.MenuStrip1.PerformLayout()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
@@ -354,4 +386,7 @@ Partial Class Form1
     Friend WithEvents ProgressBar1 As ProgressBar
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
     Friend WithEvents Button1 As Button
+    Friend WithEvents MenuStrip1 As MenuStrip
+    Friend WithEvents ActualizarMedidoresToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents AyudaToolStripMenuItem As ToolStripMenuItem
 End Class

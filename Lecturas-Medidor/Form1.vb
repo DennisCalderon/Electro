@@ -673,14 +673,18 @@ Public Class Form1
         MsgBox(nombre)
     End Sub
 
-    Private Sub Form1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles MyBase.KeyPress
+    Private Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+        If e.KeyCode = Keys.F1 Then
+            'datos.ShowDialog()
+        End If
 
     End Sub
 
-    Private Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
-        If e.KeyData = Keys.F1 Then
-            MsgBox("buena")
-        End If
+    Private Sub ActualizarMedidoresToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ActualizarMedidoresToolStripMenuItem.Click
+        datos.ShowDialog()
+    End Sub
 
+    Private Sub AyudaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AyudaToolStripMenuItem.Click
+        Dev.ShowDialog()
     End Sub
 End Class

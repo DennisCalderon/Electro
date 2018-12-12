@@ -218,7 +218,7 @@ Public Class Form1
         Dim mes As String
         Dim Potencia As String
 
-        Dim IdMedidor As String
+        Dim codsuministro As String
         Dim FTEA As String
         Dim EA As Double
 
@@ -241,7 +241,7 @@ Public Class Form1
                 mes = fech.Month
                 'MsgBox(mes, MsgBoxStyle.Information, "leyendo")
                 Potencia = arreglo(4)
-                consulta(CStr(id_medidor), IdMedidor, FTEA)
+                consulta(CStr(id_medidor), codsuministro, FTEA)
                 'MsgBox(Val(Potencia), MsgBoxStyle.Information, "leyendo")
                 'MsgBox(Val(Replace(FTEA, ",", ".")), MsgBoxStyle.Information, "leyendo")
                 'MsgBox((Val(Potencia) * Val(Replace(FTEA, ",", "."))), MsgBoxStyle.Information, "leyendo")
@@ -262,7 +262,7 @@ Public Class Form1
 
                 Potencia = arreglo(4)
 
-                consulta(CStr(id_medidor), IdMedidor, FTEA)
+                consulta(CStr(id_medidor), codsuministro, FTEA)
 
                 'MsgBox(Val(Potencia), MsgBoxStyle.Information, "leyendo")
                 'MsgBox(Val(Replace(FTEA, ",", ".")), MsgBoxStyle.Information, "leyendo")
@@ -284,7 +284,7 @@ Public Class Form1
 
                 Potencia = arreglo(3)
 
-                consulta(CStr(id_medidor), IdMedidor, FTEA)
+                consulta(CStr(id_medidor), codsuministro, FTEA)
 
                 'MsgBox(Val(Potencia), MsgBoxStyle.Information, "leyendo")
                 'MsgBox(Val(Replace(FTEA, ",", ".")), MsgBoxStyle.Information, "leyendo")
@@ -296,10 +296,10 @@ Public Class Form1
 
 
         EA = Math.Round(EA, 5)
-        tabla.Rows.Add(mes, cod_empresa, IIf(IdMedidor = "", "No Existe", IdMedidor), cod_barra, fech_hora, CStr(EA))
+        tabla.Rows.Add(mes, cod_empresa, IIf(codsuministro = "", "No Existe", codsuministro), cod_barra, fech_hora, CStr(EA))
 
     End Sub
-    Sub consulta(ByVal serie As String, ByRef IdMedidor As String, ByRef FTEA As String)
+    Sub consulta(ByVal serie As String, ByRef codsuministro As String, ByRef FTEA As String)
 
         Dim objCon As SQLiteConnection
         Dim objCommand As SQLiteCommand
@@ -311,13 +311,13 @@ Public Class Form1
             objCommand = objCon.CreateCommand()
             'MsgBox("primero", MsgBoxStyle.Information, "leyendo")
             'objCommand.CommandText = "select FactortransformacionEA from clientes where serie='" & serie & "'"
-            objCommand.CommandText = "select CodigoSuministro, FactorTransformacionEA from clientes where serie=" & serie & ""
+            objCommand.CommandText = "select CodigoSuministro, FactorTransformacionEA from clientes where serie=" & serie & " and NumImport in (select  Max(NumImport) from clientes)"
             'MsgBox(objCommand.CommandText, MsgBoxStyle.Information, "leyendo")
             objReader = objCommand.ExecuteReader()
 
             'MsgBox((objReader.Read()), MsgBoxStyle.Information, "leyendo")
             If objReader.Read() Then
-                IdMedidor = objReader.Item("CodigoSuministro").ToString
+                codsuministro = objReader.Item("CodigoSuministro").ToString
                 FTEA = objReader.Item("FactorTransformacionEA").ToString
                 'MsgBox(CStr(FTEA), MsgBoxStyle.Information, "leyendo")
             End If
@@ -492,8 +492,17 @@ Public Class Form1
         Dim filasTotales As Integer
         Dim abrirexcel As String
 
+        Dim idmedidor As Integer 'comprobar que exista el Id de medidor
+        Dim codsuministro As String
+        Dim verificar() As String
+
         ' obtener el total de registros
         For ii = 0 To lbArchivos.Items.Count - 1
+
+            'comprobar que el Medidor exista
+            idmedidor = CInt(Val(lbArchivos.Items.Item(ii)))
+            consulta(idmedidor, codsuministro, "0")
+            verificar(ii) = codsuministro
 
             archivo = lbArchivos.Items(ii)
             'MsgBox(archivo, MsgBoxStyle.Information, "leyendo")

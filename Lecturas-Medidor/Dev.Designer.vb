@@ -29,6 +29,8 @@ Partial Class Dev
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.LinkLabel2 = New System.Windows.Forms.LinkLabel()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.LinkLabel3 = New System.Windows.Forms.LinkLabel()
         Me.SuspendLayout()
         '
         'LinkLabel1
@@ -53,12 +55,13 @@ Partial Class Dev
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(38, 36)
+        Me.Label2.Location = New System.Drawing.Point(38, 20)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(445, 13)
+        Me.Label2.Size = New System.Drawing.Size(445, 26)
         Me.Label2.TabIndex = 2
-        Me.Label2.Text = "Sistema Desarrollado a Pedido del Señor Victor de YYYYYYYYY y asesorado por el Sr" &
-    ". Oliver"
+        Me.Label2.Text = "Sistema Desarrollado a Pedido del Sr. Victor Condori Choque Supervisor del Área d" &
+    "e Servico " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "de Clientes Mayores y asesorado por el Sr. Oliver Cabrera Cutipa Bac" &
+    "hiller en Ingeniería"
         '
         'Label3
         '
@@ -89,11 +92,33 @@ Partial Class Dev
         Me.LinkLabel2.TabStop = True
         Me.LinkLabel2.Text = "dennis.tacna@gmail.com"
         '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(75, 191)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(42, 13)
+        Me.Label5.TabIndex = 6
+        Me.Label5.Text = "Celular:"
+        '
+        'LinkLabel3
+        '
+        Me.LinkLabel3.AutoSize = True
+        Me.LinkLabel3.LinkColor = System.Drawing.Color.Black
+        Me.LinkLabel3.Location = New System.Drawing.Point(139, 191)
+        Me.LinkLabel3.Name = "LinkLabel3"
+        Me.LinkLabel3.Size = New System.Drawing.Size(64, 13)
+        Me.LinkLabel3.TabIndex = 7
+        Me.LinkLabel3.TabStop = True
+        Me.LinkLabel3.Text = "925-599814"
+        '
         'Dev
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(553, 232)
+        Me.Controls.Add(Me.LinkLabel3)
+        Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.LinkLabel2)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.Label3)
@@ -105,7 +130,7 @@ Partial Class Dev
         Me.MinimizeBox = False
         Me.Name = "Dev"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Soporte:"
+        Me.Text = "Soporte y Ayuda"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -117,4 +142,6 @@ Partial Class Dev
     Friend WithEvents Label3 As Label
     Friend WithEvents Label4 As Label
     Friend WithEvents LinkLabel2 As LinkLabel
+    Friend WithEvents Label5 As Label
+    Friend WithEvents LinkLabel3 As LinkLabel
 End Class

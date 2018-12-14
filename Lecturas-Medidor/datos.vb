@@ -27,38 +27,36 @@ Public Class datos
         If myFileDialog.FileName.ToString <> "" Then
             Dim ExcelFile As String = myFileDialog.FileName.ToString
 
-            Dim ds As New DataSet
-            Dim da As OleDbDataAdapter
-            Dim dt As DataTable
-            Dim conn As OleDbConnection
-
             xSheet = InputBox("Digite el nombre de la Hoja que desea importar", "Complete")
-            conn = New OleDbConnection(
-                              "Provider=Microsoft.ACE.OLEDB.12.0;" &
-                              "data source=" & ExcelFile & "; " &
-                             "Extended Properties='Excel 12.0 Xml;HDR=Yes'")
+            ''''''''''''''''''
             Try
-                'limpiar el DGV en cada posible carga verdadera
-                'MsgBox("buena")
-                dgvmedidor.DataMember = ""
-                dgvmedidor.DataSource = ""
 
-                Button2.Enabled = True
+                Dim cadenaConexion As String =
+                "Provider=Microsoft.ACE.OLEDB.12.0;" &
+                "Extended Properties='Excel 12.0 Xml;HDR=Yes;'" &
+                ";Data Source=" & ExcelFile
 
-                da = New OleDbDataAdapter("SELECT * FROM  [" & xSheet & "$]", conn)
-                conn.Open()
-                da.Fill(ds, "MyData")
-                dt = ds.Tables("MyData")
-                dgvmedidor.DataSource = ds
-                dgvmedidor.DataMember = "MyData"
+                Using cnn As New OleDbConnection(cadenaConexion)
+
+                    Dim sql As String = "SELECT * FROM [" & xSheet & "$]"
+
+                    Dim das As New OleDbDataAdapter(sql, cnn)
+
+                    Dim dts As New DataTable()
+
+                    das.Fill(dts)
+
+                    dgvmedidor.DataSource = dts
+                    Button2.Enabled = True
+
+                End Using
+
             Catch ex As Exception
+                MessageBox.Show(ex.Message)
                 MsgBox("Inserte un nombre valido de la Hoja que desea importar", MsgBoxStyle.Information, "Informacion")
-            Finally
-                conn.Close()
             End Try
         End If
         xSheet = ""
-        '        MsgBox("Se ha cargado la importacion correctamente", MsgBoxStyle.Information, "Importado con exito")
     End Sub
     Sub ConsultaNumImport(ByRef NumImport As String)
 
@@ -70,7 +68,7 @@ Public Class datos
             objCon = New SQLiteConnection(cadena_conexion)
             objCon.Open()
             objCommand = objCon.CreateCommand()
-            objCommand.CommandText = "select  Max(NumImport) from clientes"
+            objCommand.CommandText = "select  Max(NumImport) from Clientes"
             objReader = objCommand.ExecuteReader()
 
             If objReader.Read() Then
@@ -86,9 +84,7 @@ Public Class datos
         End Try
 
     End Sub
-    Sub ConsultaCargar(ByVal NumImport As Integer, ByVal Item As Integer, ByVal CodigoRutaSuministro As String, ByVal CodigoSuministro As String,
-                       ByVal NombreSuministro As String, ByVal DireccionPredio As String, ByVal FactorTransformacionEA As String,
-                       ByVal Marca_medidor As String, ByVal Modelo As String, ByVal Serie As String)
+    Sub ConsultaCargar(ByVal NumImport As Integer, ByVal Item As Integer, ByVal CodigoRutaSuministro As String, ByVal CodigoSuministro As String, ByVal NombreSuministro As String, ByVal DireccionPredio As String, ByVal PotenciaContratadaHFP As String, ByVal FechaInicio As String, ByVal DireccionElectrica As String, ByVal NumeroDNI As String, ByVal NumeroRUC As String, ByVal Telefono As String, ByVal NombreSector As String, ByVal TipoAlimentacion As String, ByVal PuntoConexion As String, ByVal SimboloImpresionRecibo As String, ByVal TipoRedElectrica As String, ByVal TipoSistema As String, ByVal Tension As String, ByVal Tarifa As String, ByVal SistemaElectrico As String, ByVal ActividadEconomica As String, ByVal FactorTension As String, ByVal FactorCorriente As String, ByVal FactorTransformacionEA As String, ByVal MarcaDelMedidor As String, ByVal Modelo As String, ByVal Serie As String, ByVal AnoFabricacion As String, ByVal Hilos As String, ByVal Fases As String, ByVal ConstanteRotacion As String, ByVal IP As String, ByVal Blanco1 As String, ByVal Blanco2 As String, ByVal Blanco3 As String, ByVal uno As String, ByVal dos As String, ByVal tres As String, ByVal cuatro As String, ByVal cinco As String, ByVal seis As String, ByVal siete As String, ByVal dies As String)
 
         Dim objCon1 As SQLiteConnection
         Dim objCommand1 As SQLiteCommand
@@ -98,19 +94,19 @@ Public Class datos
             objCon1.Open()
             'MsgBox("Abierta DB")
             objCommand1 = objCon1.CreateCommand()
-            objCommand1.CommandText = "insert into clientes (NumImport, Item, CodigoRutaSuministro, CodigoSuministro, NombreSuministro, DireccionPredio, FactorTransformacionEA, Marca_medidor, Modelo, Serie) values (""" & NumImport & """,""" & Item & """,""" & CodigoRutaSuministro & """,""" & CodigoSuministro & """,""" & NombreSuministro & """,""" & DireccionPredio & """,""" & FactorTransformacionEA & """,""" & Marca_medidor & """,""" & Modelo & """,""" & Serie & """);"
+            objCommand1.CommandText = "insert into Clientes values (""" & NumImport & """,""" & Item & """,""" & CodigoRutaSuministro & """,""" & CodigoSuministro & """,""" & NombreSuministro & """,""" & DireccionPredio & """,""" & PotenciaContratadaHFP & """,""" & FechaInicio & """,""" & DireccionElectrica & """,""" & NumeroDNI & """,""" & NumeroRUC & """,""" & Telefono & """,""" & NombreSector & """,""" & TipoAlimentacion & """,""" & PuntoConexion & """,""" & SimboloImpresionRecibo & """,""" & TipoRedElectrica & """,""" & TipoSistema & """,""" & Tension & """,""" & Tarifa & """,""" & SistemaElectrico & """,""" & ActividadEconomica & """,""" & FactorTension & """,""" & FactorCorriente & """,""" & FactorTransformacionEA & """,""" & MarcaDelMedidor & """,""" & Modelo & """,""" & Serie & """,""" & AnoFabricacion & """,""" & Hilos & """,""" & Fases & """,""" & ConstanteRotacion & """,""" & IP & """,""" & Blanco1 & """,""" & Blanco2 & """,""" & Blanco3 & """,""" & uno & """,""" & dos & """,""" & tres & """,""" & cuatro & """,""" & cinco & """,""" & seis & """,""" & siete & """,""" & dies & """);"
             'MsgBox(objCommand1.CommandText, MsgBoxStyle.Information, "leyendo")
             'objCommand1.CommandText = "insert into clientes (NumImport, Item) values (""" & NumImport & """,""" & Item & """);"
 
             txtprueba.Text = objCommand1.CommandText
             'MsgBox(objCommand1.CommandText)
-            'System.Threading.Thread.CurrentThread.Sleep(10000)
             objCommand1.ExecuteNonQuery()
             'MsgBox("ex DB")
             'Catch ex As Exception
             'MsgBox(ex.ToString)
         Finally
             If Not IsNothing(objCon1) Then
+                objCommand1.Dispose()
                 objCon1.Close()
             End If
         End Try
@@ -119,17 +115,16 @@ Public Class datos
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Dim NumImport As Integer
-        'ConsultaNumImport(NumImport) ' obtener el último ID del lote de medidores en la DB
-        ConsultaNumImport(NumImport)
-        MsgBox(NumImport)
-        'nombre = dgvmedidor.Columns.Item(1).Name
-        'MsgBox(nombre)
+        ConsultaNumImport(NumImport) ' obtener el último ID del lote de medidores en la DB
 
         ProgressBar1.Minimum = 0
         ProgressBar1.Maximum = dgvmedidor.Rows.Count * 1.005
 
         With dgvmedidor
             If .Rows.Count > 0 Then
+                Button1.Enabled = False
+                Button2.Enabled = False
+                dgvmedidor.Enabled = False
                 'ConsultaNumImport(NumImport)
                 For i As Integer = 0 To .Rows.Count - 1
 
@@ -138,20 +133,9 @@ Public Class datos
                         'MsgBox(NumImport)
                         'MsgBox(dgvmedidor.Rows(i).Cells(0).Value.ToString())
                         'MsgBox(dgvmedidor.Rows(i).Cells(1).Value.ToString())
-                        'MsgBox(dgvmedidor.Rows(i).Cells(2).Value.ToString())
-                        'MsgBox(dgvmedidor.Rows(i).Cells(3).Value.ToString())
-                        'MsgBox(dgvmedidor.Rows(i).Cells(4).Value.ToString())
-                        'MsgBox(dgvmedidor.Rows(i).Cells(23).Value.ToString())
-                        'MsgBox(dgvmedidor.Rows(i).Cells(24).Value.ToString())
-                        'MsgBox(dgvmedidor.Rows(i).Cells(25).Value.ToString())
-                        'MsgBox(dgvmedidor.Rows(i).Cells(26).Value.ToString())
                         If String.IsNullOrEmpty(.Rows(i).Cells(0).Value.ToString()) = False Then
 
-                            ConsultaCargar(NumImport, .Rows(i).Cells(0).Value.ToString(), .Rows(i).Cells(1).Value.ToString(),
-                                           .Rows(i).Cells(2).Value.ToString(), .Rows(i).Cells(3).Value.ToString(),
-                                           .Rows(i).Cells(4).Value.ToString(), .Rows(i).Cells(23).Value.ToString(),
-                                           .Rows(i).Cells(24).Value.ToString(), .Rows(i).Cells(25).Value.ToString(),
-                                           .Rows(i).Cells(26).Value.ToString())
+                            ConsultaCargar(NumImport, .Rows(i).Cells(0).Value.ToString(), .Rows(i).Cells(1).Value.ToString(), .Rows(i).Cells(2).Value.ToString(), .Rows(i).Cells(3).Value.ToString(), .Rows(i).Cells(4).Value.ToString(), .Rows(i).Cells(5).Value.ToString(), .Rows(i).Cells(6).Value.ToString(), .Rows(i).Cells(7).Value.ToString(), .Rows(i).Cells(8).Value.ToString(), .Rows(i).Cells(9).Value.ToString(), .Rows(i).Cells(10).Value.ToString(), .Rows(i).Cells(11).Value.ToString(), .Rows(i).Cells(12).Value.ToString(), .Rows(i).Cells(13).Value.ToString(), .Rows(i).Cells(14).Value.ToString(), .Rows(i).Cells(15).Value.ToString(), .Rows(i).Cells(16).Value.ToString(), .Rows(i).Cells(17).Value.ToString(), .Rows(i).Cells(18).Value.ToString(), .Rows(i).Cells(19).Value.ToString(), .Rows(i).Cells(20).Value.ToString(), .Rows(i).Cells(21).Value.ToString(), .Rows(i).Cells(22).Value.ToString(), .Rows(i).Cells(23).Value.ToString(), .Rows(i).Cells(24).Value.ToString(), .Rows(i).Cells(25).Value.ToString(), .Rows(i).Cells(26).Value.ToString(), .Rows(i).Cells(27).Value.ToString(), .Rows(i).Cells(28).Value.ToString(), .Rows(i).Cells(29).Value.ToString(), .Rows(i).Cells(30).Value.ToString(), .Rows(i).Cells(31).Value.ToString(), .Rows(i).Cells(32).Value.ToString(), .Rows(i).Cells(33).Value.ToString(), .Rows(i).Cells(34).Value.ToString(), .Rows(i).Cells(35).Value.ToString(), .Rows(i).Cells(36).Value.ToString(), .Rows(i).Cells(37).Value.ToString(), .Rows(i).Cells(38).Value.ToString(), .Rows(i).Cells(39).Value.ToString(), .Rows(i).Cells(40).Value.ToString(), .Rows(i).Cells(41).Value.ToString(), .Rows(i).Cells(42).Value.ToString())
                         End If
 
                     End If
@@ -159,8 +143,9 @@ Public Class datos
                 Next
             End If
         End With
+        MsgBox("Padrón Actualizado", MsgBoxStyle.Information, "Proceso de Cargar Terminado")
         ProgressBar1.Value = 0
-        MsgBox("ex DB")
+        Me.Close()
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click

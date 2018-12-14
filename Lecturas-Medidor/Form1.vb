@@ -311,7 +311,7 @@ Public Class Form1
             objCommand = objCon.CreateCommand()
             'MsgBox("primero", MsgBoxStyle.Information, "leyendo")
             'objCommand.CommandText = "select FactortransformacionEA from clientes where serie='" & serie & "'"
-            objCommand.CommandText = "select CodigoSuministro, FactorTransformacionEA from clientes where serie=" & serie & " and NumImport in (select  Max(NumImport) from clientes)"
+            objCommand.CommandText = "select CodigoSuministro, FactorTransformacionEA from Clientes where serie=" & serie & " and NumImport in (select  Max(NumImport) from Clientes)"
             'MsgBox(objCommand.CommandText, MsgBoxStyle.Information, "leyendo")
             objReader = objCommand.ExecuteReader()
 
@@ -324,9 +324,11 @@ Public Class Form1
         Catch ex As Exception
             MsgBox(ex.ToString)
         Finally
-            If Not IsNothing(objCon) Then
-                objCon.Close()
-            End If
+            'If Not IsNothing(objCon) Then
+            objCommand.Dispose()
+            objReader.Close()
+            objCon.Close()
+            'End If
         End Try
 
     End Sub
@@ -492,139 +494,174 @@ Public Class Form1
         Dim filasTotales As Integer
         Dim abrirexcel As String
 
-        Dim idmedidor As Integer 'comprobar que exista el Id de medidor
+        Dim idserie As String 'comprobar que exista la serie del medidor
         Dim codsuministro As String
-        Dim verificar() As String
+        Dim FTEA As String
+        Dim prueba As String = ""
+        Dim veri As Integer
+        Dim mandarCadena As String
 
-        ' obtener el total de registros
-        For ii = 0 To lbArchivos.Items.Count - 1
-
-            'comprobar que el Medidor exista
-            idmedidor = CInt(Val(lbArchivos.Items.Item(ii)))
-            consulta(idmedidor, codsuministro, "0")
-            verificar(ii) = codsuministro
-
-            archivo = lbArchivos.Items(ii)
-            'MsgBox(archivo, MsgBoxStyle.Information, "leyendo")
-
-            Dim ruta As String = ruta_general.Substring(0, (ruta_general.LastIndexOf("\") + 1))
-            ruta = ruta & archivo
-            txtruta.Text = ruta
-
-            'MsgBox(ruta, MsgBoxStyle.Information, "leyendo")
-            obtenertotal(dgvcontenido, ruta, conteo, filasT)
-            conteoT = conteo + conteoT
-            filasTotales = filasT + filasTotales
-            'MsgBox(conteoT, MsgBoxStyle.Information, "leyendo")
-            'diferenciar entre la exportación unitaria y la masiva
-            If (exportar = 1) Then
-                dgvcontenido.Rows.Clear()
+        'comprobar que el Medidor exista
+        For veri = 0 To lbArchivos.Items.Count - 1
+            idserie = CInt(Val(lbArchivos.Items.Item(veri)))
+            'MsgBox(idserie, MsgBoxStyle.Information, "leyendo")
+            consulta(idserie, codsuministro, FTEA)
+            'MsgBox(codsuministro, MsgBoxStyle.Information, "leyendo")
+            If codsuministro = "" Then
+                mandarCadena = mandarCadena & lbArchivos.Items.Item(veri) & ";"
             End If
-            'MsgBox(archivo, MsgBoxStyle.Information, "leyendo")
+            'MsgBox(verificar.Length(), MsgBoxStyle.Information, "leyendo")
+            codsuministro = ""
+            FTEA = ""
+        Next veri
+        'MsgBox(mandarCadena, MsgBoxStyle.Information, "leyendo")
+        Module1.cadena = mandarCadena
+        Module1.verificarProceso = 1
+        Dim form As New RegistrosVacios
+        form.ShowDialog()
+        Dim proceso As Integer
+        proceso = Module1.verificarProceso
+        'MsgBox(proceso, MsgBoxStyle.Information, "leyendo")
+        If proceso = 2 Then
 
-        Next ii
+            For ii = 0 To lbArchivos.Items.Count - 1
+                archivo = lbArchivos.Items(ii)
+                'MsgBox(archivo, MsgBoxStyle.Information, "leyendo")
 
-        registrosTotales = filasTotales
-        ProgressBar1.Minimum = 0
-        ProgressBar1.Maximum = filasTotales * 1.007
-        MsgBox(conteoT, MsgBoxStyle.Information, "El Total de Lecturas es:")
-        'MsgBox(lbArchivos.Items.Count - 1, MsgBoxStyle.Information, "leyendo")
+                Dim ruta As String = ruta_general.Substring(0, (ruta_general.LastIndexOf("\") + 1))
+                ruta = ruta & archivo
+                txtruta.Text = ruta
 
-        Dim numexport As Integer = 1
-        Dim numhoja As Integer = 1
-        Dim num As Integer = 2
-        Dim id_medidor As String
-        'dividir el contenido en hojas y agregar el sobrante
-        Dim divisor As Integer
-        Dim dividirEnHojas As Integer
-        Dim contar As Integer = 0
+                'MsgBox(ruta, MsgBoxStyle.Information, "leyendo")
+                obtenertotal(dgvcontenido, ruta, conteo, filasT)
+                conteoT = conteo + conteoT
+                filasTotales = filasT + filasTotales
+                'MsgBox(conteoT, MsgBoxStyle.Information, "leyendo")
+                'MsgBox(archivo, MsgBoxStyle.Information, "leyendo")
+            Next ii
 
-        dividirEnHojas = 5 ' modificar el numero de archivos que se tomaran por hoja
-        divisor = Math.Truncate(lbArchivos.Items.Count / dividirEnHojas)
-        'MsgBox(divisor, MsgBoxStyle.Information, "leyendo")
-        Dim DGVTotal As New DataGridView
-        With DGVTotal
-            .AllowUserToAddRows = False
-            .Name = "Hoja"
-            .Visible = False
-            .Columns.Clear()
-            .Columns.Add("Column1", "Mes")
-            .Columns.Add("Column2", "Código de Empresa")
-            .Columns.Add("Column3", "Código de Suministro")
-            .Columns.Add("Column4", "Código de Barra de Compra")
-            .Columns.Add("Column5", "Fecha / Hora")
-            .Columns.Add("Column6", "EA")
-        End With
+            registrosTotales = filasTotales
+            ProgressBar1.Minimum = 0
+            ProgressBar1.Maximum = filasTotales * 1.007
+            MsgBox(conteoT, MsgBoxStyle.Information, "El Total de Registros es:")
+            'MsgBox(lbArchivos.Items.Count - 1, MsgBoxStyle.Information, "leyendo")
 
-        For ii = 0 To lbArchivos.Items.Count - 1
+            Dim numexport As Integer = 1
+            Dim numhoja As Integer = 1
+            Dim num As Integer = 2
+            Dim id_medidor As String
+            'dividir el contenido en hojas y agregar el sobrante
+            Dim divisor As Integer
+            Dim dividirEnHojas As Integer
+            Dim contar As Integer = 0
 
-            archivo = lbArchivos.Items(ii)
-            'MsgBox(archivo, MsgBoxStyle.Information, "leyendo")
-            'MsgBox("uno", MsgBoxStyle.Information, "leyendo")
+            dividirEnHojas = 4 ' modificar el numero de archivos que se tomaran por hoja
 
-            Dim ruta As String = ruta_general.Substring(0, (ruta_general.LastIndexOf("\") + 1))
-            ruta = ruta & archivo
-            'MsgBox(ruta, MsgBoxStyle.Information, "leyendo")
+            divisor = Math.Truncate(lbArchivos.Items.Count / dividirEnHojas)
+            'MsgBox(divisor, MsgBoxStyle.Information, "leyendo")
+            Dim DGVTotal As New DataGridView
+            With DGVTotal
+                .AllowUserToAddRows = False
+                .Name = "Hoja"
+                .Visible = False
+                .Columns.Clear()
+                .Columns.Add("Column1", "Mes")
+                .Columns.Add("Column2", "Código de Empresa")
+                .Columns.Add("Column3", "Código de Suministro")
+                .Columns.Add("Column4", "Código de Barra de Compra")
+                .Columns.Add("Column5", "Fecha / Hora")
+                .Columns.Add("Column6", "EA")
+            End With
 
-            id_medidor = CInt(Val(lbArchivos.Items.Item(ii)))
+            For ii = 0 To lbArchivos.Items.Count - 1
 
-            Dim tipo_archivo As Integer
-            tipo_archivo = cbotipomedidor.SelectedIndex
-            Select Case tipo_archivo
-                Case 0 : lecturaArchivo(DGVTotal, ruta, " ", 2, id_medidor)
-                Case 1 : lecturaArchivo(DGVTotal, ruta, ",", 0, id_medidor)
-                Case 2 : lecturaArchivo(DGVTotal, ruta, vbTab, 1, id_medidor)
-            End Select
-            numhoja = numhoja + 1
-            'MsgBox(numhoja, MsgBoxStyle.Information, "leyendo")
+                archivo = lbArchivos.Items(ii)
+                'MsgBox(archivo, MsgBoxStyle.Information, "leyendo")
 
-            If numhoja > dividirEnHojas Then
-                'MsgBox("dos", MsgBoxStyle.Information, "leyendo")
-                If numexport = 2 Then
-                    'MsgBox("cuatro", MsgBoxStyle.Information, "leyendo")
-                    'If File.Exists(FlNm) Then File.Delete(FlNm)
-                    AddExcel(DGVTotal, num)
+                Dim ruta As String = ruta_general.Substring(0, (ruta_general.LastIndexOf("\") + 1))
+                ruta = ruta & archivo
+                'MsgBox(ruta, MsgBoxStyle.Information, "leyendo")
 
-                    DGVTotal.Rows.Clear()
-                    num = num + 1
-                    numhoja = 1
-                End If
+                id_medidor = CInt(Val(lbArchivos.Items.Item(ii)))
 
-                If numexport = 1 Then
-                    'MsgBox("tres", MsgBoxStyle.Information, "leyendo")
-                    'exportar a EXCEL
-                    FlNm2 = name
-                    'MsgBox(FlNm2, MsgBoxStyle.Information, "leyendo")
-                    FlNm = "Exportados\" & FlNm2 & "--" & Now.Year & "-" & Now.Month & "-" & Now.Day & "--" & Now.Hour & "-" & Now.Minute & "-" & Now.Second & ".xls"
-                    If File.Exists(FlNm) Then File.Delete(FlNm)
-                    abrirexcel = FlNm
-                    ExportToExcel(DGVTotal)
+                Dim tipo_archivo As Integer
+                tipo_archivo = cbotipomedidor.SelectedIndex
+                Select Case tipo_archivo
+                    Case 0 : lecturaArchivo(DGVTotal, ruta, " ", 2, id_medidor)
+                    Case 1 : lecturaArchivo(DGVTotal, ruta, ",", 0, id_medidor)
+                    Case 2 : lecturaArchivo(DGVTotal, ruta, vbTab, 1, id_medidor)
+                End Select
+                numhoja = numhoja + 1
+                'MsgBox(numhoja, MsgBoxStyle.Information, "leyendo")
 
-                    DGVTotal.Rows.Clear()
-                    'Process.Start(FlNm)
-                    numexport = 2
-                    numhoja = 1
-                End If
-
-            End If
-            'MsgBox(contar, MsgBoxStyle.Information, "leyendo")
-            If contar > ((divisor * dividirEnHojas) - 1) Then
-                'MsgBox("uno", MsgBoxStyle.Information, "leyendo")
-                If contar = lbArchivos.Items.Count - 1 Then
+                If numhoja > dividirEnHojas Then
                     'MsgBox("dos", MsgBoxStyle.Information, "leyendo")
-                    'MsgBox(num, MsgBoxStyle.Information, "leyendo")
-                    AddExcel(DGVTotal, num)
+                    If numexport = 2 Then
+                        'MsgBox("cuatro", MsgBoxStyle.Information, "leyendo")
+                        'If File.Exists(FlNm) Then File.Delete(FlNm)
+                        AddExcel(DGVTotal, num)
+
+                        'guardar los registros en la base de datos
+                        Module1.RegDB = DGVTotal
+                        Dim formDB As New GuardarDGVDB
+                        formDB.ShowDialog()
+
+                        DGVTotal.Rows.Clear()
+                        num = num + 1
+                        numhoja = 1
+                    End If
+
+                    If numexport = 1 Then
+                        'MsgBox("tres", MsgBoxStyle.Information, "leyendo")
+                        'exportar a EXCEL
+                        FlNm2 = name
+                        'MsgBox(FlNm2, MsgBoxStyle.Information, "leyendo")
+                        FlNm = "Exportados\" & FlNm2 & "--" & Now.Year & "-" & Now.Month & "-" & Now.Day & "--" & Now.Hour & "-" & Now.Minute & "-" & Now.Second & ".xls"
+                        If File.Exists(FlNm) Then File.Delete(FlNm)
+                        abrirexcel = FlNm
+                        ExportToExcel(DGVTotal)
+
+                        'guardar los registros en la base de datos
+                        Module1.RegDB = DGVTotal
+                        Dim formDB As New GuardarDGVDB
+                        formDB.ShowDialog()
+
+                        DGVTotal.Rows.Clear()
+                        'Process.Start(FlNm)
+                        numexport = 2
+                        numhoja = 1
+                    End If
+
                 End If
-            End If
-            contar = contar + 1
-        Next ii
-        Dim fs As New StreamWriter(FlNm, True)
-        With fs
-            .WriteLine("</Workbook>")
-            .Close()
-        End With
-        'Process.Start("Exportados\" & Now.Day & "-" & Now.Month & "-" & Now.Year & ".xls")
-        Process.Start(abrirexcel)
+                'MsgBox(contar, MsgBoxStyle.Information, "leyendo")
+                If contar > ((divisor * dividirEnHojas) - 1) Then
+                    'MsgBox("uno", MsgBoxStyle.Information, "leyendo")
+                    If contar = lbArchivos.Items.Count - 1 Then
+                        'MsgBox("dos", MsgBoxStyle.Information, "leyendo")
+                        'MsgBox(num, MsgBoxStyle.Information, "leyendo")
+                        AddExcel(DGVTotal, num)
+
+                        'guardar los registros en la base de datos
+                        Module1.RegDB = DGVTotal
+                        Dim formDB As New GuardarDGVDB
+                        formDB.ShowDialog()
+
+                        DGVTotal.Rows.Clear()
+                    End If
+                End If
+                contar = contar + 1
+            Next ii
+
+            Dim fs As New StreamWriter(FlNm, True)
+            With fs
+                .WriteLine("</Workbook>")
+                .Close()
+            End With
+            'Process.Start("Exportados\" & Now.Day & "-" & Now.Month & "-" & Now.Year & ".xls")
+            MsgBox("Exportación Terminada, tenga presente que el archivo generado es Universal, para editarlo por favor guardelo en el formato que quiera", MsgBoxStyle.Information, "Atención!!!")
+            Process.Start(abrirexcel)
+        End If
+
 
         lbArchivos.Enabled = True
         btnNuevo.Enabled = True
@@ -677,9 +714,8 @@ Public Class Form1
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        Dim nombre As String
-        nombre = lbArchivos.Items.Item(2)
-        MsgBox(nombre)
+        Dim formDB As New RegistrosVacios
+        formDB.ShowDialog()
     End Sub
 
     Private Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
@@ -690,10 +726,13 @@ Public Class Form1
     End Sub
 
     Private Sub ActualizarMedidoresToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ActualizarMedidoresToolStripMenuItem.Click
-        datos.ShowDialog()
+        Dim formDB As New datos
+        formDB.ShowDialog()
     End Sub
 
     Private Sub AyudaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AyudaToolStripMenuItem.Click
-        Dev.ShowDialog()
+        Dim formDB As New Dev
+        formDB.ShowDialog()
     End Sub
+
 End Class

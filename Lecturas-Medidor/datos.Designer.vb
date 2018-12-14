@@ -81,6 +81,7 @@ Partial Class datos
         Me.Button3.TabIndex = 5
         Me.Button3.Text = "Button3"
         Me.Button3.UseVisualStyleBackColor = True
+        Me.Button3.Visible = False
         '
         'datos
         '

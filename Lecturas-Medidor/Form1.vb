@@ -213,21 +213,14 @@ Public Class Form1
         Dim arreglo() As String = linea.Split(caracter)
         Dim cod_empresa As String = "ELS"
         Dim cod_barra As String = "B0229"
-        Dim fech_hora As String
+        Dim fech_hora As String = ""
         Dim fech As Date
-        Dim mes As String
-        Dim Potencia As String
+        Dim mes As String = ""
+        Dim Potencia As String = ""
 
-        Dim codsuministro As String
-        Dim FTEA As String
+        Dim codsuministro As String = ""
+        Dim FTEA As String = ""
         Dim EA As Double
-
-        'MsgBox(arreglo(0), MsgBoxStyle.Information, "leyendo")
-        'MsgBox(arreglo(1), MsgBoxStyle.Information, "leyendo")
-        'MsgBox(arreglo(2), MsgBoxStyle.Information, "leyendo")
-        'MsgBox(arreglo(3), MsgBoxStyle.Information, "leyendo")
-        'MsgBox(arreglo(4), MsgBoxStyle.Information, "leyendo")
-        'MsgBox(arreglo(5), MsgBoxStyle.Information, "leyendo")
 
         Dim tipo_archivo As Integer
         tipo_archivo = cbotipomedidor.SelectedIndex
@@ -236,60 +229,28 @@ Public Class Form1
                 fech = CStr(arreglo(0))
                 fech_hora = CStr(fech.Year) & (If(fech.Month < 10, 0 & fech.Month, fech.Month)) & CStr(If(fech.Day < 10, 0 & fech.Day, fech.Day)) &
                     (Replace(arreglo(1).Substring(0, 5), ":", ""))
-                'MsgBox(fech_hora, MsgBoxStyle.Information, "leyendo")
-                'MsgBox(arreglo(4), MsgBoxStyle.Information, "leyendo")
                 mes = fech.Month
-                'MsgBox(mes, MsgBoxStyle.Information, "leyendo")
                 Potencia = arreglo(4)
                 consulta(CStr(id_medidor), codsuministro, FTEA)
-                'MsgBox(Val(Potencia), MsgBoxStyle.Information, "leyendo")
-                'MsgBox(Val(Replace(FTEA, ",", ".")), MsgBoxStyle.Information, "leyendo")
-                'MsgBox((Val(Potencia) * Val(Replace(FTEA, ",", "."))), MsgBoxStyle.Information, "leyendo")
-                'MsgBox(arreglo(3), MsgBoxStyle.Information, "leyendo")
                 EA = ((Val(Potencia) * (Val(Replace(FTEA, ",", ".")) / 4)))
-                'MsgBox(CStr(EA), MsgBoxStyle.Information, "leyendo")
 
             Case 1
                 fech = CStr(arreglo(1).Substring(1, 8))
-
                 fech_hora = CStr(fech.Year) & (If(fech.Month < 10, 0 & fech.Month, fech.Month)) & CStr(If(fech.Day < 10, 0 & fech.Day, fech.Day)) &
                             (Replace(arreglo(2).Substring(1, 5), ":", ""))
-
-                'MsgBox(fech_hora, MsgBoxStyle.Information, "leyendo")
-
                 mes = fech.Month
-                'MsgBox(mes, MsgBoxStyle.Information, "leyendo")
-
                 Potencia = arreglo(4)
-
                 consulta(CStr(id_medidor), codsuministro, FTEA)
-
-                'MsgBox(Val(Potencia), MsgBoxStyle.Information, "leyendo")
-                'MsgBox(Val(Replace(FTEA, ",", ".")), MsgBoxStyle.Information, "leyendo")
-                'MsgBox((Val(Potencia) * Val(Replace(FTEA, ",", "."))), MsgBoxStyle.Information, "leyendo")
-                'MsgBox(arreglo(3), MsgBoxStyle.Information, "leyendo")
                 EA = ((Val(Potencia) * (Val(Replace(FTEA, ",", ".")) / 4)))
                 'MsgBox(CStr(EA), MsgBoxStyle.Information, "leyendo")
 
             Case 2
                 fech = CStr(arreglo(0))
-
                 fech_hora = CStr(fech.Year) & (If(fech.Month < 10, 0 & fech.Month, fech.Month)) & CStr(If(fech.Day < 10, 0 & fech.Day, fech.Day)) &
                     (Replace(arreglo(1).Substring(0, 5), ":", ""))
-
-                'MsgBox(fech_hora, MsgBoxStyle.Information, "leyendo")
-
                 mes = fech.Month
-                'MsgBox(mes, MsgBoxStyle.Information, "leyendo")
-
                 Potencia = arreglo(3)
-
                 consulta(CStr(id_medidor), codsuministro, FTEA)
-
-                'MsgBox(Val(Potencia), MsgBoxStyle.Information, "leyendo")
-                'MsgBox(Val(Replace(FTEA, ",", ".")), MsgBoxStyle.Information, "leyendo")
-                'MsgBox((Val(Potencia) * Val(Replace(FTEA, ",", "."))), MsgBoxStyle.Information, "leyendo")
-                'MsgBox(arreglo(3), MsgBoxStyle.Information, "leyendo")
                 EA = ((Val(Potencia) * (Val(Replace(FTEA, ",", ".")) / 4)))
                 'MsgBox(CStr(EA), MsgBoxStyle.Information, "leyendo")
         End Select
@@ -309,10 +270,7 @@ Public Class Form1
             objCon = New SQLiteConnection(cadena_conexion)
             objCon.Open()
             objCommand = objCon.CreateCommand()
-            'MsgBox("primero", MsgBoxStyle.Information, "leyendo")
-            'objCommand.CommandText = "select FactortransformacionEA from clientes where serie='" & serie & "'"
             objCommand.CommandText = "select CodigoSuministro, FactorTransformacionEA from Clientes where serie=" & serie & " and NumImport in (select  Max(NumImport) from Clientes)"
-            'MsgBox(objCommand.CommandText, MsgBoxStyle.Information, "leyendo")
             objReader = objCommand.ExecuteReader()
 
             'MsgBox((objReader.Read()), MsgBoxStyle.Information, "leyendo")
@@ -330,7 +288,6 @@ Public Class Form1
             objCon.Close()
             'End If
         End Try
-
     End Sub
 
     Private Sub btnExportUnit_Click(sender As Object, e As EventArgs) Handles btnExportUnit.Click
@@ -373,9 +330,6 @@ Public Class Form1
         FlNm2 = Val(lbArchivos.SelectedItem)
         'MsgBox(FlNm2, MsgBoxStyle.Information, "leyendo")
         FlNm = "Exportados\" & FlNm2 & "--" & Now.Year & "-" & Now.Month & "-" & Now.Day & "--" & Now.Hour & "-" & Now.Minute & "-" & Now.Second & ".xls"
-        'FlNm = "Exportados\" & FlNm2 & ".xls"
-        'FlNm = Application.StartupPath & "\Student " _
-        '        & Now.Day & "-" & Now.Month & "-" & Now.Year & ".xls"
         If File.Exists(FlNm) Then File.Delete(FlNm)
         'MsgBox("stop", MsgBoxStyle.Information, "leyendo")
         ExportToExcel(DGV)
@@ -383,7 +337,6 @@ Public Class Form1
         DGV.Dispose()
         DGV = Nothing
 
-        'Process.Start("Exportados\" & Now.Day & "-" & Now.Month & "-" & Now.Year & ".xls")
         Process.Start(FlNm)
         'Process.Start("Exportados\" & FlNm2 & ".xls")
         btnNuevo.Enabled = True
@@ -427,44 +380,46 @@ Public Class Form1
             .WriteLine("        </Style>")
             .WriteLine("    </Styles>")
 
-            If DGV.Name = "Hoja" Then
-                .WriteLine("    <Worksheet ss:Name=""Hoja1"">") 'SET NAMA SHEET
-                .WriteLine("        <Table>")
-                .WriteLine("            <Column ss:Width=""40""/>") '   "Mes"
-                .WriteLine("            <Column ss:Width=""93""/>") '   "Código de Empresa"
-                .WriteLine("            <Column ss:Width=""84""/>") '   "Código de Suministro"
-                .WriteLine("            <Column ss:Width=""100""/>") '  "Código de Barra de Compra"
-                .WriteLine("            <Column ss:Width=""84""/>") '   "Fecha / Hora"
-                .WriteLine("            <Column ss:Width=""90""/>") '   "EA"
-            End If
-            'AUTO SET HEADER
-            .WriteLine("            <Row ss:StyleID=""ksg"">")
-            For i As Integer = 0 To DGV.Columns.Count - 1 'SET HEADER
-                Application.DoEvents()
-                .WriteLine("            <Cell ss:StyleID=""hdr"">")
-                .WriteLine("                <Data ss:Type=""String"">{0}</Data>", DGV.Columns.Item(i).HeaderText)
-                .WriteLine("            </Cell>")
-            Next
-            .WriteLine("            </Row>")
-
-            For intRow As Integer = 0 To DGV.RowCount - 1
-                Application.DoEvents()
-                .WriteLine("        <Row ss:StyleID=""ksg"" ss:utoFitHeight =""0"">")
-                For intCol As Integer = 0 To DGV.Columns.Count - 1
-                    Application.DoEvents()
-                    .WriteLine("        <Cell ss:StyleID=""isi"">")
-                    .WriteLine("            <Data ss:Type=""String"">{0}</Data>", DGV.Item(intCol, intRow).Value.ToString)
-                    .WriteLine("        </Cell>")
-                Next
-                .WriteLine("        </Row>")
-            Next
-            .WriteLine("        </Table>")
-            .WriteLine("    </Worksheet>")
             If exportar = 1 Then
+                If DGV.Name = "Hoja" Then
+                    .WriteLine("    <Worksheet ss:Name=""Hoja1"">") 'SET NAMA SHEET
+                    .WriteLine("        <Table>")
+                    .WriteLine("            <Column ss:Width=""40""/>") '   "Mes"
+                    .WriteLine("            <Column ss:Width=""93""/>") '   "Código de Empresa"
+                    .WriteLine("            <Column ss:Width=""84""/>") '   "Código de Suministro"
+                    .WriteLine("            <Column ss:Width=""100""/>") '  "Código de Barra de Compra"
+                    .WriteLine("            <Column ss:Width=""84""/>") '   "Fecha / Hora"
+                    .WriteLine("            <Column ss:Width=""90""/>") '   "EA"
+                End If
+                'AUTO SET HEADER
+                .WriteLine("            <Row ss:StyleID=""ksg"">")
+                For i As Integer = 0 To DGV.Columns.Count - 1 'SET HEADER
+                    Application.DoEvents()
+                    .WriteLine("            <Cell ss:StyleID=""hdr"">")
+                    .WriteLine("                <Data ss:Type=""String"">{0}</Data>", DGV.Columns.Item(i).HeaderText)
+                    .WriteLine("            </Cell>")
+                Next
+                .WriteLine("            </Row>")
+
+                For intRow As Integer = 0 To DGV.RowCount - 1
+                    Application.DoEvents()
+                    .WriteLine("        <Row ss:StyleID=""ksg"" ss:utoFitHeight =""0"">")
+                    For intCol As Integer = 0 To DGV.Columns.Count - 1
+                        Application.DoEvents()
+                        .WriteLine("        <Cell ss:StyleID=""isi"">")
+                        .WriteLine("            <Data ss:Type=""String"">{0}</Data>", DGV.Item(intCol, intRow).Value.ToString)
+                        .WriteLine("        </Cell>")
+                    Next
+                    .WriteLine("        </Row>")
+                Next
+                .WriteLine("        </Table>")
+                .WriteLine("    </Worksheet>")
+
                 .WriteLine("</Workbook>")
             End If
             .Close()
         End With
+        fs.Close()
     End Sub
 
     Private Sub btnExportMasivo_Click(sender As Object, e As EventArgs) Handles btnExportMasivo.Click
@@ -486,20 +441,20 @@ Public Class Form1
 
         'recorrer el listbox que contiene el nombre de los archivos de lectura
         Dim ii As Integer
-        Dim archivo As String
+        Dim archivo As String = ""
         Dim conteo As Integer
         Dim conteoT As Integer
 
         Dim filasT As Integer
         Dim filasTotales As Integer
-        Dim abrirexcel As String
+        Dim abrirexcel As String = ""
 
         Dim idserie As String 'comprobar que exista la serie del medidor
         Dim codsuministro As String
-        Dim FTEA As String
+        Dim FTEA As String = ""
         Dim prueba As String = ""
-        Dim veri As Integer
-        Dim mandarCadena As String
+        Dim veri As Integer = ""
+        Dim mandarCadena As String = ""
 
         'comprobar que el Medidor exista
         For veri = 0 To lbArchivos.Items.Count - 1
@@ -517,34 +472,49 @@ Public Class Form1
         'MsgBox(mandarCadena, MsgBoxStyle.Information, "leyendo")
         Module1.cadena = mandarCadena
         Module1.verificarProceso = 1
-        Dim form As New RegistrosVacios
-        form.ShowDialog()
         Dim proceso As Integer
-        proceso = Module1.verificarProceso
-        'MsgBox(proceso, MsgBoxStyle.Information, "leyendo")
+        proceso = 2
+        If mandarCadena IsNot Nothing Then
+            Dim form As New RegistrosVacios
+            form.ShowDialog()
+            proceso = Module1.verificarProceso
+        End If
+
+        'Array donde se almacenaran las TXT dependiendo de donde son: Tacna, Moquegua o Ilo
         If proceso = 2 Then
+            Dim Tacna As String = ""
+            Dim Moquegua As String = ""
+            Dim Ilo As String = ""
 
             For ii = 0 To lbArchivos.Items.Count - 1
                 archivo = lbArchivos.Items(ii)
-                'MsgBox(archivo, MsgBoxStyle.Information, "leyendo")
-
                 Dim ruta As String = ruta_general.Substring(0, (ruta_general.LastIndexOf("\") + 1))
                 ruta = ruta & archivo
-                txtruta.Text = ruta
-
-                'MsgBox(ruta, MsgBoxStyle.Information, "leyendo")
+                Dim NombreSector As String = ""
+                consultaSector(CInt(Val(lbArchivos.Items.Item(ii))), NombreSector)
+                'MsgBox(NombreSector)
+                If NombreSector IsNot Nothing Then
+                    NombreSector = NombreSector
+                Else
+                    NombreSector = ""
+                End If
+                Select Case NombreSector
+                    Case "Tacna" : Tacna = Tacna & lbArchivos.Items(ii) & ";"
+                    Case "Moquegua" : Moquegua = Moquegua & lbArchivos.Items(ii) & ";"
+                    Case "Ilo" : Ilo = Ilo & lbArchivos.Items(ii) & ";"
+                End Select
                 obtenertotal(dgvcontenido, ruta, conteo, filasT)
                 conteoT = conteo + conteoT
                 filasTotales = filasT + filasTotales
-                'MsgBox(conteoT, MsgBoxStyle.Information, "leyendo")
-                'MsgBox(archivo, MsgBoxStyle.Information, "leyendo")
             Next ii
+            'MsgBox(Tacna, MsgBoxStyle.Information, "Tacna")
+            'MsgBox(Moquegua, MsgBoxStyle.Information, "Moquegua")
+            'MsgBox(Ilo, MsgBoxStyle.Information, "Ilo")
 
             registrosTotales = filasTotales
             ProgressBar1.Minimum = 0
             ProgressBar1.Maximum = filasTotales * 1.007
-            MsgBox(conteoT, MsgBoxStyle.Information, "El Total de Registros es:")
-            'MsgBox(lbArchivos.Items.Count - 1, MsgBoxStyle.Information, "leyendo")
+            'MsgBox(conteoT, MsgBoxStyle.Information, "El Total de Registros es:")
 
             Dim numexport As Integer = 1
             Dim numhoja As Integer = 1
@@ -573,93 +543,143 @@ Public Class Form1
                 .Columns.Add("Column6", "EA")
             End With
 
-            For ii = 0 To lbArchivos.Items.Count - 1
-
-                archivo = lbArchivos.Items(ii)
-                'MsgBox(archivo, MsgBoxStyle.Information, "leyendo")
-
-                Dim ruta As String = ruta_general.Substring(0, (ruta_general.LastIndexOf("\") + 1))
-                ruta = ruta & archivo
-                'MsgBox(ruta, MsgBoxStyle.Information, "leyendo")
-
-                id_medidor = CInt(Val(lbArchivos.Items.Item(ii)))
-
-                Dim tipo_archivo As Integer
-                tipo_archivo = cbotipomedidor.SelectedIndex
-                Select Case tipo_archivo
-                    Case 0 : lecturaArchivo(DGVTotal, ruta, " ", 2, id_medidor)
-                    Case 1 : lecturaArchivo(DGVTotal, ruta, ",", 0, id_medidor)
-                    Case 2 : lecturaArchivo(DGVTotal, ruta, vbTab, 1, id_medidor)
-                End Select
-                numhoja = numhoja + 1
-                'MsgBox(numhoja, MsgBoxStyle.Information, "leyendo")
-
-                If numhoja > dividirEnHojas Then
-                    'MsgBox("dos", MsgBoxStyle.Information, "leyendo")
-                    If numexport = 2 Then
-                        'MsgBox("cuatro", MsgBoxStyle.Information, "leyendo")
-                        'If File.Exists(FlNm) Then File.Delete(FlNm)
-                        AddExcel(DGVTotal, num)
-
-                        'guardar los registros en la base de datos
-                        Module1.RegDB = DGVTotal
-                        Dim formDB As New GuardarDGVDB
-                        formDB.ShowDialog()
-
-                        DGVTotal.Rows.Clear()
-                        num = num + 1
-                        numhoja = 1
-                    End If
-
-                    If numexport = 1 Then
-                        'MsgBox("tres", MsgBoxStyle.Information, "leyendo")
-                        'exportar a EXCEL
-                        FlNm2 = name
-                        'MsgBox(FlNm2, MsgBoxStyle.Information, "leyendo")
-                        FlNm = "Exportados\" & FlNm2 & "--" & Now.Year & "-" & Now.Month & "-" & Now.Day & "--" & Now.Hour & "-" & Now.Minute & "-" & Now.Second & ".xls"
-                        If File.Exists(FlNm) Then File.Delete(FlNm)
-                        abrirexcel = FlNm
-                        ExportToExcel(DGVTotal)
-
-                        'guardar los registros en la base de datos
-                        Module1.RegDB = DGVTotal
-                        Dim formDB As New GuardarDGVDB
-                        formDB.ShowDialog()
-
-                        DGVTotal.Rows.Clear()
-                        'Process.Start(FlNm)
-                        numexport = 2
-                        numhoja = 1
-                    End If
-
-                End If
-                'MsgBox(contar, MsgBoxStyle.Information, "leyendo")
-                If contar > ((divisor * dividirEnHojas) - 1) Then
-                    'MsgBox("uno", MsgBoxStyle.Information, "leyendo")
-                    If contar = lbArchivos.Items.Count - 1 Then
-                        'MsgBox("dos", MsgBoxStyle.Information, "leyendo")
-                        'MsgBox(num, MsgBoxStyle.Information, "leyendo")
-                        AddExcel(DGVTotal, num)
-
-                        'guardar los registros en la base de datos
-                        Module1.RegDB = DGVTotal
-                        Dim formDB As New GuardarDGVDB
-                        formDB.ShowDialog()
-
-                        DGVTotal.Rows.Clear()
-                    End If
-                End If
-                contar = contar + 1
-            Next ii
+            FlNm2 = name
+            'MsgBox(FlNm2, MsgBoxStyle.Information, "leyendo")
+            FlNm = "Exportados\" & FlNm2 & "--" & Now.Year & "-" & Now.Month & "-" & Now.Day & "--" & Now.Hour & "-" & Now.Minute & "-" & Now.Second & ".xls"
+            If File.Exists(FlNm) Then File.Delete(FlNm)
+            ExportToExcel(DGVTotal)
 
             Dim fs As New StreamWriter(FlNm, True)
+            fs.Close()
             With fs
-                .WriteLine("</Workbook>")
-                .Close()
+                '.Write("insert into Historico (NumImport, Mes, CodigoEmpresa, CodigoSuministro, CodigoBarraCompra, FechaHora, EA) ")
+                If Tacna IsNot Nothing Then
+                    Tacna = Tacna.Remove(Tacna.Length - 1)
+                    'MsgBox(Tacna,, "tacna")
+                    Dim arregloTacna() As String = Tacna.Split(";")
+
+                    AddExcelHeader(DGVTotal, "Tacna")
+
+                    For intRow As Integer = 0 To arregloTacna.Length - 1
+                        id_medidor = CInt(Val(arregloTacna(intRow)))
+                        Dim ruta As String = ruta_general.Substring(0, (ruta_general.LastIndexOf("\") + 1))
+                        ruta = ruta & arregloTacna(intRow)
+                        'MsgBox(ruta,, "tacna")
+
+                        Dim tipo_archivo As Integer
+                        tipo_archivo = cbotipomedidor.SelectedIndex
+                        Select Case tipo_archivo
+                            Case 0 : lecturaArchivo(DGVTotal, ruta, " ", 2, id_medidor)
+                            Case 1 : lecturaArchivo(DGVTotal, ruta, ",", 0, id_medidor)
+                            Case 2 : lecturaArchivo(DGVTotal, ruta, vbTab, 1, id_medidor)
+                        End Select
+
+                        AddExcelBody(DGVTotal)
+
+                        'guardar los registros en la base de datos
+                        Module1.RegDB = DGVTotal
+                        Dim formDB As New GuardarDGVDB
+                        formDB.ShowDialog()
+
+                        DGVTotal.Rows.Clear()
+                    Next
+                    Dim fsT As New StreamWriter(FlNm, True)
+                    With fsT
+                        .WriteLine("        </Table>")
+                        .WriteLine("    </Worksheet>")
+                        .Close()
+                    End With
+                End If
+
+                If Moquegua IsNot Nothing Then
+                    Moquegua = Moquegua.Remove(Moquegua.Length - 1)
+                    Dim arregloMoquegua() As String = Moquegua.Split(";")
+
+                    AddExcelHeader(DGVTotal, "Moquegua")
+
+                    For intRow As Integer = 0 To arregloMoquegua.Length - 1
+
+                        id_medidor = CInt(Val(arregloMoquegua(intRow)))
+
+                        Dim ruta As String = ruta_general.Substring(0, (ruta_general.LastIndexOf("\") + 1))
+                        ruta = ruta & arregloMoquegua(intRow)
+                        'MsgBox(ruta,, "moquegua")
+
+                        Dim tipo_archivo As Integer
+                        tipo_archivo = cbotipomedidor.SelectedIndex
+                        Select Case tipo_archivo
+                            Case 0 : lecturaArchivo(DGVTotal, ruta, " ", 2, id_medidor)
+                            Case 1 : lecturaArchivo(DGVTotal, ruta, ",", 0, id_medidor)
+                            Case 2 : lecturaArchivo(DGVTotal, ruta, vbTab, 1, id_medidor)
+                        End Select
+
+                        AddExcelBody(DGVTotal)
+
+                        'guardar los registros en la base de datos
+                        Module1.RegDB = DGVTotal
+                        Dim formDB As New GuardarDGVDB
+                        formDB.ShowDialog()
+
+                        DGVTotal.Rows.Clear()
+
+                    Next
+                    Dim fsM As New StreamWriter(FlNm, True)
+                    With fsM
+                        .WriteLine("        </Table>")
+                        .WriteLine("    </Worksheet>")
+                        .Close()
+                    End With
+                End If
+
+                If Ilo IsNot Nothing Then
+                    Ilo = Ilo.Remove(Ilo.Length - 1)
+                    Dim arregloIlo() As String = Ilo.Split(";")
+
+                    AddExcelHeader(DGVTotal, "Ilo")
+
+                    For intRow As Integer = 0 To arregloIlo.Length - 1
+
+                        id_medidor = CInt(Val(arregloIlo(intRow)))
+
+                        Dim ruta As String = ruta_general.Substring(0, (ruta_general.LastIndexOf("\") + 1))
+                        ruta = ruta & arregloIlo(intRow)
+                        'MsgBox(ruta,, "ilo")
+
+                        Dim tipo_archivo As Integer
+                        tipo_archivo = cbotipomedidor.SelectedIndex
+                        Select Case tipo_archivo
+                            Case 0 : lecturaArchivo(DGVTotal, ruta, " ", 2, id_medidor)
+                            Case 1 : lecturaArchivo(DGVTotal, ruta, ",", 0, id_medidor)
+                            Case 2 : lecturaArchivo(DGVTotal, ruta, vbTab, 1, id_medidor)
+                        End Select
+
+                        AddExcelBody(DGVTotal)
+
+                        'guardar los registros en la base de datos
+                        Module1.RegDB = DGVTotal
+                        Dim formDB As New GuardarDGVDB
+                        formDB.ShowDialog()
+
+                        DGVTotal.Rows.Clear()
+                    Next
+                    Dim fsI As New StreamWriter(FlNm, True)
+                    With fsI
+                        .WriteLine("        </Table>")
+                        .WriteLine("    </Worksheet>")
+                        .Close()
+                    End With
+                End If
+
+                Dim fs2 As New StreamWriter(FlNm, True)
+                With fs2
+                    .WriteLine("</Workbook>")
+                    .Close()
+                End With
             End With
-            'Process.Start("Exportados\" & Now.Day & "-" & Now.Month & "-" & Now.Year & ".xls")
-            MsgBox("Exportación Terminada, tenga presente que el archivo generado es Universal, para editarlo por favor guardelo en el formato que quiera", MsgBoxStyle.Information, "Atención!!!")
-            Process.Start(abrirexcel)
+            fs.Close()
+
+            MsgBox("Exportación Terminada, tenga presente que el archivo generado posee un formato Universal de datos, para editarlo correctamente guardelo en la versión de EXCEL de su preferencia.", MsgBoxStyle.Information, "Atención!!!")
+            Process.Start(FlNm)
         End If
 
 
@@ -671,13 +691,11 @@ Public Class Form1
         ProgressBar1.Value = 0
         conteoTotal = 0
     End Sub
-    Private Sub AddExcel(ByVal DGV As DataGridView, ByVal num As Integer)
+    Private Sub AddExcelHeader(ByVal DGV As DataGridView, ByVal NameSector As String)
         Dim fs As New StreamWriter(FlNm, True)
-        Dim nombre As String
-        nombre = "Hoja" & num
         With fs
             If DGV.Name = "Hoja" Then
-                .WriteLine("    <Worksheet ss:Name=""" & nombre & """>") 'SET NAMA SHEET
+                .WriteLine("    <Worksheet ss:Name=""" & NameSector & """>") 'SET NAMA SHEET
                 .WriteLine("        <Table>")
                 .WriteLine("            <Column ss:Width=""40""/>") '   "Mes"
                 .WriteLine("            <Column ss:Width=""93""/>") '   "Código de Empresa"
@@ -695,7 +713,13 @@ Public Class Form1
                 .WriteLine("            </Cell>")
             Next
             .WriteLine("            </Row>")
+        End With
+        fs.Close()
+    End Sub
 
+    Private Sub AddExcelBody(ByVal DGV As DataGridView)
+        Dim fs As New StreamWriter(FlNm, True)
+        With fs
             For intRow As Integer = 0 To DGV.RowCount - 1
                 Application.DoEvents()
                 .WriteLine("        <Row ss:StyleID=""ksg"" ss:utoFitHeight =""0"">")
@@ -707,10 +731,9 @@ Public Class Form1
                 Next
                 .WriteLine("        </Row>")
             Next
-            .WriteLine("        </Table>")
-            .WriteLine("    </Worksheet>")
-            .Close()
+
         End With
+        fs.Close()
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
@@ -735,4 +758,33 @@ Public Class Form1
         formDB.ShowDialog()
     End Sub
 
+    Sub consultaSector(ByVal serie As String, ByRef NombreSector As String)
+
+        Dim objCon As SQLiteConnection
+        Dim objCommand As SQLiteCommand
+        Dim objReader As SQLiteDataReader
+
+        Try
+            objCon = New SQLiteConnection(cadena_conexion)
+            objCon.Open()
+            objCommand = objCon.CreateCommand()
+            'MsgBox("primero", MsgBoxStyle.Information, "leyendo")
+            objCommand.CommandText = "select NombreSector from Clientes where serie=" & serie & " and NumImport in (select  Max(NumImport) from Clientes)"
+            'MsgBox(objCommand.CommandText, MsgBoxStyle.Information, "leyendo")
+            objReader = objCommand.ExecuteReader()
+
+            'MsgBox((objReader.Read()), MsgBoxStyle.Information, "leyendo")
+            If objReader.Read() Then
+                NombreSector = objReader.Item("NombreSector").ToString
+                'MsgBox(CStr(FTEA), MsgBoxStyle.Information, "leyendo")
+            End If
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        Finally
+            objCommand.Dispose()
+            objReader.Close()
+            objCon.Close()
+        End Try
+
+    End Sub
 End Class

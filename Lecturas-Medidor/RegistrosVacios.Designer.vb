@@ -87,10 +87,10 @@ Partial Class RegistrosVacios
         Me.Label2.AutoSize = True
         Me.Label2.Location = New System.Drawing.Point(15, 31)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(212, 26)
+        Me.Label2.Size = New System.Drawing.Size(215, 26)
         Me.Label2.TabIndex = 5
-        Me.Label2.Text = "Los elementos listados acontinuación serán" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & " ignorados en el procesamiento de Dat" &
-    "os"
+        Me.Label2.Text = "Los elementos listados a continuación serán" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & " ignorados en el procesamiento de Da" &
+    "tos"
         '
         'RegistrosVacios
         '

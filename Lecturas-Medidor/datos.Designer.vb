@@ -26,7 +26,6 @@ Partial Class datos
         Me.dgvmedidor = New System.Windows.Forms.DataGridView()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
-        Me.txtprueba = New System.Windows.Forms.TextBox()
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.Button3 = New System.Windows.Forms.Button()
         CType(Me.dgvmedidor, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -34,6 +33,8 @@ Partial Class datos
         '
         'dgvmedidor
         '
+        Me.dgvmedidor.AllowUserToAddRows = False
+        Me.dgvmedidor.AllowUserToDeleteRows = False
         Me.dgvmedidor.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvmedidor.Location = New System.Drawing.Point(12, 54)
         Me.dgvmedidor.Name = "dgvmedidor"
@@ -58,14 +59,6 @@ Partial Class datos
         Me.Button2.Text = "Procesar y Guardar"
         Me.Button2.UseVisualStyleBackColor = True
         '
-        'txtprueba
-        '
-        Me.txtprueba.Location = New System.Drawing.Point(12, 20)
-        Me.txtprueba.Name = "txtprueba"
-        Me.txtprueba.Size = New System.Drawing.Size(239, 20)
-        Me.txtprueba.TabIndex = 3
-        Me.txtprueba.Visible = False
-        '
         'ProgressBar1
         '
         Me.ProgressBar1.Location = New System.Drawing.Point(12, 429)
@@ -75,13 +68,12 @@ Partial Class datos
         '
         'Button3
         '
-        Me.Button3.Location = New System.Drawing.Point(602, 20)
+        Me.Button3.Location = New System.Drawing.Point(84, 12)
         Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(75, 23)
+        Me.Button3.Size = New System.Drawing.Size(152, 31)
         Me.Button3.TabIndex = 5
-        Me.Button3.Text = "Button3"
+        Me.Button3.Text = "Mostrar Padrón Actual"
         Me.Button3.UseVisualStyleBackColor = True
-        Me.Button3.Visible = False
         '
         'datos
         '
@@ -90,7 +82,6 @@ Partial Class datos
         Me.ClientSize = New System.Drawing.Size(800, 459)
         Me.Controls.Add(Me.Button3)
         Me.Controls.Add(Me.ProgressBar1)
-        Me.Controls.Add(Me.txtprueba)
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.dgvmedidor)
@@ -102,14 +93,12 @@ Partial Class datos
         Me.Text = "Cargar lista de clientes"
         CType(Me.dgvmedidor, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
 
     Friend WithEvents dgvmedidor As DataGridView
     Friend WithEvents Button1 As Button
     Friend WithEvents Button2 As Button
-    Friend WithEvents txtprueba As TextBox
     Friend WithEvents ProgressBar1 As ProgressBar
     Friend WithEvents Button3 As Button
 End Class

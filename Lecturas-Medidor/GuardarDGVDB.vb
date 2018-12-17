@@ -24,17 +24,19 @@ Public Class GuardarDGVDB
 
         DGVReg = Module1.RegDB
 
+        Dim NumImport As Integer
+        ConsultaNumImport(NumImport) ' obtener el último ID del lote de medidores en la DB
+        CargarRegistros(DGVReg, NumImport)
+
         Dim filasT As Integer
         obtenertotal(filasT)
         pbDB.Minimum = 0
-        pbDB.Maximum = filasT
+        pbDB.Maximum = filasT * 1.007
         pbDB.Value = 0
-        Dim NumImport As Integer
-        ConsultaNumImport(NumImport) ' obtener el último ID del lote de medidores en la DB
 
-        CargarRegistros(DGVReg, NumImport)
         GuardarRegistros()
         pbDB.Value = 0
+        File.Delete("exportDB.txt")
         Me.Close()
 
     End Sub
@@ -64,30 +66,7 @@ Public Class GuardarDGVDB
         End Try
 
     End Sub
-    Sub guardarReg(ByVal NumImport As Integer, ByVal Mes As Integer, ByVal CodigoEmpresa As String, ByVal CodigoSuministro As String,
-               ByVal CodigoBarra As String, ByVal FechHora As String, ByVal EA As String)
 
-        Dim objCon1 As SQLiteConnection
-        Dim objCommand1 As SQLiteCommand
-
-        Try
-            objCon1 = New SQLiteConnection(cadena_conexion) '& "New=true;")
-            objCon1.Open()
-            'MsgBox("Abierta DB")
-            objCommand1 = objCon1.CreateCommand()
-            objCommand1.CommandText = "insert into Historico (NumImport, Mes, CodigoEmpresa, CodigoSuministro, CodigoBarraCompra, FechaHora, EA) values (""" & NumImport & """,""" & Mes & """,""" & CodigoEmpresa & """,""" & CodigoSuministro & """,""" & CodigoBarra & """,""" & FechHora & """,""" & EA & """);"
-
-            objCommand1.ExecuteNonQuery()
-        Catch ex As Exception
-            MsgBox(ex.ToString)
-        Finally
-            If Not IsNothing(objCon1) Then
-                objCommand1.Dispose()
-                objCon1.Close()
-            End If
-        End Try
-
-    End Sub
     Dim FlNm As String
     'se encargara de guardar los querys en un archivo de texto para unirlos en insert de 30 unidades
     Sub CargarRegistros(ByVal DGV As DataGridView, ByVal NumImport As String)
@@ -96,7 +75,7 @@ Public Class GuardarDGVDB
         Dim inquery As Integer = 1
         dividirEnBloques = 30 ' modificar el numero de archivos que se tomaran por hoja
 
-        FlNm = "Exportados\export.txt"
+        FlNm = "exportDB.txt"
         If File.Exists(FlNm) Then File.Delete(FlNm)
         Dim fs As New StreamWriter(FlNm, False)
 
@@ -124,21 +103,18 @@ Public Class GuardarDGVDB
                 End If
                 inquery += 1
 
-
                 If inquery = dividirBloque Then
                     .WriteLine("")
                     .Write("insert into Historico (NumImport, Mes, CodigoEmpresa, CodigoSuministro, CodigoBarraCompra, FechaHora, EA) ")
                     inquery = 0
                 End If
-
             Next
         End With
         fs.Close()
-
     End Sub
 
     Sub GuardarRegistros()
-        Dim objReader As New StreamReader("Exportados\export.txt")
+        Dim objReader As New StreamReader("exportDB.txt")
         Dim rLine As String = ""
         Dim objCon1 As SQLiteConnection
         Dim objCommand1 As SQLiteCommand
@@ -159,17 +135,18 @@ Public Class GuardarDGVDB
                     MsgBox(rLine)
                     MsgBox(ex.ToString)
                 Finally
-                    If Not IsNothing(objCon1) Then
-                        objCommand1.Dispose()
-                        objCon1.Close()
-                    End If
+                    'If Not IsNothing(objCon1) Then
+                    objCommand1.Dispose()
+                    objCon1.Close()
+                    'End If
                 End Try
                 pbDB.Value = pbDB.Value + 1
             End If
         Loop Until rLine Is Nothing
+        objReader.Close()
     End Sub
     Sub obtenertotal(ByRef filasT As Integer)
-        Dim objReader As New StreamReader("Exportados\export.txt")
+        Dim objReader As New StreamReader("exportDB.txt")
         Dim sLine As String = ""
         Dim fila As Integer = 0
 
@@ -180,8 +157,8 @@ Public Class GuardarDGVDB
             End If
 
         Loop Until sLine Is Nothing
+        objReader.Close()
 
         filasT = fila
-        objReader.Close()
     End Sub
 End Class

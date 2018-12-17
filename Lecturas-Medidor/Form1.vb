@@ -447,13 +447,10 @@ Public Class Form1
 
         Dim filasT As Integer
         Dim filasTotales As Integer
-        Dim abrirexcel As String = ""
 
         Dim idserie As String 'comprobar que exista la serie del medidor
         Dim codsuministro As String
         Dim FTEA As String = ""
-        Dim prueba As String = ""
-        Dim veri As Integer = ""
         Dim mandarCadena As String = ""
 
         'comprobar que el Medidor exista
@@ -474,7 +471,7 @@ Public Class Form1
         Module1.verificarProceso = 1
         Dim proceso As Integer
         proceso = 2
-        If mandarCadena IsNot Nothing Then
+        If mandarCadena IsNot "" Then
             Dim form As New RegistrosVacios
             form.ShowDialog()
             proceso = Module1.verificarProceso
@@ -516,19 +513,8 @@ Public Class Form1
             ProgressBar1.Maximum = filasTotales * 1.007
             'MsgBox(conteoT, MsgBoxStyle.Information, "El Total de Registros es:")
 
-            Dim numexport As Integer = 1
-            Dim numhoja As Integer = 1
-            Dim num As Integer = 2
             Dim id_medidor As String
-            'dividir el contenido en hojas y agregar el sobrante
-            Dim divisor As Integer
-            Dim dividirEnHojas As Integer
-            Dim contar As Integer = 0
 
-            dividirEnHojas = 4 ' modificar el numero de archivos que se tomaran por hoja
-
-            divisor = Math.Truncate(lbArchivos.Items.Count / dividirEnHojas)
-            'MsgBox(divisor, MsgBoxStyle.Information, "leyendo")
             Dim DGVTotal As New DataGridView
             With DGVTotal
                 .AllowUserToAddRows = False
@@ -549,11 +535,13 @@ Public Class Form1
             If File.Exists(FlNm) Then File.Delete(FlNm)
             ExportToExcel(DGVTotal)
 
+            'Dim contadorReg As Integer = 1
+            'Dim divReg As Integer = 1
             Dim fs As New StreamWriter(FlNm, True)
             fs.Close()
             With fs
                 '.Write("insert into Historico (NumImport, Mes, CodigoEmpresa, CodigoSuministro, CodigoBarraCompra, FechaHora, EA) ")
-                If Tacna IsNot Nothing Then
+                If Tacna IsNot "" Then
                     Tacna = Tacna.Remove(Tacna.Length - 1)
                     'MsgBox(Tacna,, "tacna")
                     Dim arregloTacna() As String = Tacna.Split(";")
@@ -582,6 +570,19 @@ Public Class Form1
                         formDB.ShowDialog()
 
                         DGVTotal.Rows.Clear()
+
+                        'contadorReg = contadorReg + 1
+                        'If contadorReg = 340 Then
+                        '    Dim fsTa As New StreamWriter(FlNm, True)
+                        '    With fsTa
+                        '        .WriteLine("        </Table>")
+                        '        .WriteLine("    </Worksheet>")
+                        '        .Close()
+                        '    End With
+                        '    divReg = divReg + 1
+                        '    AddExcelHeader(DGVTotal, "Tacna" & divReg)
+                        '    contadorReg = 0
+                        'End If
                     Next
                     Dim fsT As New StreamWriter(FlNm, True)
                     With fsT
@@ -591,7 +592,9 @@ Public Class Form1
                     End With
                 End If
 
-                If Moquegua IsNot Nothing Then
+                'contadorReg = 0
+
+                If Moquegua IsNot "" Then
                     Moquegua = Moquegua.Remove(Moquegua.Length - 1)
                     Dim arregloMoquegua() As String = Moquegua.Split(";")
 
@@ -622,6 +625,18 @@ Public Class Form1
 
                         DGVTotal.Rows.Clear()
 
+                        'contadorReg = contadorReg + 1
+                        'If contadorReg = 340 Then
+                        '    Dim fsTa As New StreamWriter(FlNm, True)
+                        '    With fsTa
+                        '        .WriteLine("        </Table>")
+                        '        .WriteLine("    </Worksheet>")
+                        '        .Close()
+                        '    End With
+                        '    divReg = divReg + 1
+                        '    AddExcelHeader(DGVTotal, "Tacna" & divReg)
+                        '    contadorReg = 0
+                        'End If
                     Next
                     Dim fsM As New StreamWriter(FlNm, True)
                     With fsM
@@ -631,7 +646,9 @@ Public Class Form1
                     End With
                 End If
 
-                If Ilo IsNot Nothing Then
+                'contadorReg = 0
+
+                If Ilo IsNot "" Then
                     Ilo = Ilo.Remove(Ilo.Length - 1)
                     Dim arregloIlo() As String = Ilo.Split(";")
 
@@ -661,6 +678,19 @@ Public Class Form1
                         formDB.ShowDialog()
 
                         DGVTotal.Rows.Clear()
+
+                        'contadorReg = contadorReg + 1
+                        'If contadorReg = 340 Then
+                        '    Dim fsTa As New StreamWriter(FlNm, True)
+                        '    With fsTa
+                        '        .WriteLine("        </Table>")
+                        '        .WriteLine("    </Worksheet>")
+                        '        .Close()
+                        '    End With
+                        '    divReg = divReg + 1
+                        '    AddExcelHeader(DGVTotal, "Tacna" & divReg)
+                        '    contadorReg = 0
+                        'End If
                     Next
                     Dim fsI As New StreamWriter(FlNm, True)
                     With fsI
@@ -690,6 +720,12 @@ Public Class Form1
         exportar = 1
         ProgressBar1.Value = 0
         conteoTotal = 0
+
+        If proceso = 3 Then
+            lbArchivos.Items.Clear()
+            btnExportMasivo.Enabled = False
+            btnNuevo.Select()
+        End If
     End Sub
     Private Sub AddExcelHeader(ByVal DGV As DataGridView, ByVal NameSector As String)
         Dim fs As New StreamWriter(FlNm, True)

@@ -159,6 +159,9 @@ Public Class Form1
         Dim fila As Integer = 0
         Dim fila2 As Integer = 0
         'tabla.Rows.Clear()
+        Dim codsuministro As String = ""
+        Dim FTEA As String = ""
+
         tabla.AllowUserToAddRows = False
 
         Dim id_medidor As String = "" ''Número de identificación=06677067	Factor U=1	Factor I=1
@@ -173,7 +176,8 @@ Public Class Form1
                     Else
                         id_medidor = CInt(Val(lbArchivos.SelectedItem))
                     End If
-
+                    'consulta a la DB
+                    consulta(CStr(id_medidor), codsuministro, FTEA)
                     'id_medidor = CInt(id_medidor)
                     'MsgBox(id_medidor, MsgBoxStyle.Information, "leyendo")
                     fila += 1
@@ -182,7 +186,7 @@ Public Class Form1
                     If fila2 > numfila Then
                         'MsgBox(sLine, MsgBoxStyle.Information, "leyendo")
 
-                        agregarFilaCaso(tabla, sLine, caracter, id_medidor)
+                        agregarFilaCaso(tabla, sLine, caracter, id_medidor, codsuministro, FTEA)
                     End If
                     txtruta.Text = sLine
                     'MsgBox(sLine, MsgBoxStyle.Information, "leyendo")
@@ -209,7 +213,7 @@ Public Class Form1
         End If
 
     End Sub
-    Sub agregarFilaCaso(ByVal tabla As DataGridView, ByVal linea As String, ByVal caracter As String, ByVal id_medidor As Integer)
+    Sub agregarFilaCaso(ByVal tabla As DataGridView, ByVal linea As String, ByVal caracter As String, ByVal id_medidor As Integer, ByVal codsuministro As String, ByVal FTEA As String)
         Dim arreglo() As String = linea.Split(caracter)
         Dim cod_empresa As String = "ELS"
         Dim cod_barra As String = "B0229"
@@ -218,8 +222,8 @@ Public Class Form1
         Dim mes As String = ""
         Dim Potencia As String = ""
 
-        Dim codsuministro As String = ""
-        Dim FTEA As String = ""
+        'Dim codsuministro As String = ""
+        'Dim FTEA As String = ""
         Dim EA As Double
 
         Dim tipo_archivo As Integer
@@ -231,7 +235,7 @@ Public Class Form1
                     (Replace(arreglo(1).Substring(0, 5), ":", ""))
                 mes = fech.Month
                 Potencia = arreglo(4)
-                consulta(CStr(id_medidor), codsuministro, FTEA)
+                'consulta(CStr(id_medidor), codsuministro, FTEA)
                 EA = ((Val(Potencia) * (Val(Replace(FTEA, ",", ".")) / 4)))
 
             Case 1
@@ -240,7 +244,7 @@ Public Class Form1
                             (Replace(arreglo(2).Substring(1, 5), ":", ""))
                 mes = fech.Month
                 Potencia = arreglo(4)
-                consulta(CStr(id_medidor), codsuministro, FTEA)
+                'consulta(CStr(id_medidor), codsuministro, FTEA)
                 EA = ((Val(Potencia) * (Val(Replace(FTEA, ",", ".")) / 4)))
                 'MsgBox(CStr(EA), MsgBoxStyle.Information, "leyendo")
 
@@ -250,7 +254,7 @@ Public Class Form1
                     (Replace(arreglo(1).Substring(0, 5), ":", ""))
                 mes = fech.Month
                 Potencia = arreglo(3)
-                consulta(CStr(id_medidor), codsuministro, FTEA)
+                'consulta(CStr(id_medidor), codsuministro, FTEA)
                 EA = ((Val(Potencia) * (Val(Replace(FTEA, ",", ".")) / 4)))
                 'MsgBox(CStr(EA), MsgBoxStyle.Information, "leyendo")
         End Select
@@ -482,6 +486,7 @@ Public Class Form1
             Dim Tacna As String = ""
             Dim Moquegua As String = ""
             Dim Ilo As String = ""
+            'Dim otros As String = ""
 
             For ii = 0 To lbArchivos.Items.Count - 1
                 archivo = lbArchivos.Items(ii)
@@ -490,7 +495,7 @@ Public Class Form1
                 Dim NombreSector As String = ""
                 consultaSector(CInt(Val(lbArchivos.Items.Item(ii))), NombreSector)
                 'MsgBox(NombreSector)
-                If NombreSector IsNot Nothing Then
+                If NombreSector IsNot "" Then
                     NombreSector = NombreSector
                 Else
                     NombreSector = ""
@@ -499,6 +504,7 @@ Public Class Form1
                     Case "Tacna" : Tacna = Tacna & lbArchivos.Items(ii) & ";"
                     Case "Moquegua" : Moquegua = Moquegua & lbArchivos.Items(ii) & ";"
                     Case "Ilo" : Ilo = Ilo & lbArchivos.Items(ii) & ";"
+                        'Case Else : otros = otros & lbArchivos.Items(ii) & ";"
                 End Select
                 obtenertotal(dgvcontenido, ruta, conteo, filasT)
                 conteoT = conteo + conteoT
@@ -507,6 +513,7 @@ Public Class Form1
             'MsgBox(Tacna, MsgBoxStyle.Information, "Tacna")
             'MsgBox(Moquegua, MsgBoxStyle.Information, "Moquegua")
             'MsgBox(Ilo, MsgBoxStyle.Information, "Ilo")
+            'MsgBox(otros, MsgBoxStyle.Information, "otros")
 
             registrosTotales = filasTotales
             ProgressBar1.Minimum = 0
@@ -650,8 +657,9 @@ Public Class Form1
 
                 If Ilo IsNot "" Then
                     Ilo = Ilo.Remove(Ilo.Length - 1)
+                    'MsgBox(Ilo,, "ilo")
                     Dim arregloIlo() As String = Ilo.Split(";")
-
+                    'MsgBox(Ilo,, "ilo")
                     AddExcelHeader(DGVTotal, "Ilo")
 
                     For intRow As Integer = 0 To arregloIlo.Length - 1
@@ -707,7 +715,7 @@ Public Class Form1
                 End With
             End With
             fs.Close()
-
+            ProgressBar1.Value = ProgressBar1.Maximum
             MsgBox("Exportación Terminada, tenga presente que el archivo generado posee un formato Universal de datos, para editarlo correctamente guardelo en la versión de EXCEL de su preferencia.", MsgBoxStyle.Information, "Atención!!!")
             Process.Start(FlNm)
         End If

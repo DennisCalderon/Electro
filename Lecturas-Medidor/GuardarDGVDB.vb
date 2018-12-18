@@ -36,6 +36,7 @@ Public Class GuardarDGVDB
 
         GuardarRegistros()
         pbDB.Value = 0
+        'MsgBox("stop")
         File.Delete("exportDB.txt")
         Me.Close()
 
@@ -79,7 +80,7 @@ Public Class GuardarDGVDB
         If File.Exists(FlNm) Then File.Delete(FlNm)
         Dim fs As New StreamWriter(FlNm, False)
 
-        Dim dividirBloque As Integer = 40 'dividir los datos en querys
+        Dim dividirBloque As Integer = 50 'dividir los datos en querys
         With fs
             .Write("insert into Historico (NumImport, Mes, CodigoEmpresa, CodigoSuministro, CodigoBarraCompra, FechaHora, EA) ")
             For intRow As Integer = 0 To DGV.RowCount - 1

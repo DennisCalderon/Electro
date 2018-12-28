@@ -23,12 +23,12 @@ Partial Class Form1
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.btnBuscar = New System.Windows.Forms.Button()
         Me.btnNuevo = New System.Windows.Forms.Button()
         Me.btnExportUnit = New System.Windows.Forms.Button()
@@ -57,6 +57,9 @@ Partial Class Form1
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.ActualizarMedidoresToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AyudaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.chk1 = New System.Windows.Forms.CheckBox()
+        Me.chk2 = New System.Windows.Forms.CheckBox()
+        Me.chk3 = New System.Windows.Forms.CheckBox()
         Me.GroupBox4.SuspendLayout()
         CType(Me.dgvcontenido, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox3.SuspendLayout()
@@ -67,7 +70,7 @@ Partial Class Form1
         'btnBuscar
         '
         Me.btnBuscar.Image = CType(resources.GetObject("btnBuscar.Image"), System.Drawing.Image)
-        Me.btnBuscar.Location = New System.Drawing.Point(267, 19)
+        Me.btnBuscar.Location = New System.Drawing.Point(225, 19)
         Me.btnBuscar.Name = "btnBuscar"
         Me.btnBuscar.Size = New System.Drawing.Size(79, 86)
         Me.btnBuscar.TabIndex = 0
@@ -149,8 +152,8 @@ Partial Class Form1
         '
         'Column1
         '
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column1.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column1.DefaultCellStyle = DataGridViewCellStyle13
         Me.Column1.HeaderText = "Mes"
         Me.Column1.Name = "Column1"
         Me.Column1.ReadOnly = True
@@ -158,8 +161,8 @@ Partial Class Form1
         '
         'Column2
         '
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column2.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column2.DefaultCellStyle = DataGridViewCellStyle14
         Me.Column2.HeaderText = "Código de Empresa"
         Me.Column2.Name = "Column2"
         Me.Column2.ReadOnly = True
@@ -167,8 +170,8 @@ Partial Class Form1
         '
         'Column3
         '
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column3.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column3.DefaultCellStyle = DataGridViewCellStyle15
         Me.Column3.HeaderText = "Código de Suministro"
         Me.Column3.Name = "Column3"
         Me.Column3.ReadOnly = True
@@ -176,8 +179,8 @@ Partial Class Form1
         '
         'Column4
         '
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column4.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column4.DefaultCellStyle = DataGridViewCellStyle16
         Me.Column4.HeaderText = "Código de Barra de Compra"
         Me.Column4.Name = "Column4"
         Me.Column4.ReadOnly = True
@@ -186,8 +189,8 @@ Partial Class Form1
         'Column5
         '
         Me.Column5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column5.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column5.DefaultCellStyle = DataGridViewCellStyle17
         Me.Column5.HeaderText = "Fecha /Hora"
         Me.Column5.Name = "Column5"
         Me.Column5.ReadOnly = True
@@ -195,8 +198,8 @@ Partial Class Form1
         '
         'Column6
         '
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column6.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column6.DefaultCellStyle = DataGridViewCellStyle18
         Me.Column6.HeaderText = "EA"
         Me.Column6.Name = "Column6"
         Me.Column6.ReadOnly = True
@@ -217,7 +220,7 @@ Partial Class Form1
         'lblarchivos
         '
         Me.lblarchivos.AutoSize = True
-        Me.lblarchivos.Location = New System.Drawing.Point(139, 10)
+        Me.lblarchivos.Location = New System.Drawing.Point(139, 18)
         Me.lblarchivos.Name = "lblarchivos"
         Me.lblarchivos.Size = New System.Drawing.Size(13, 13)
         Me.lblarchivos.TabIndex = 11
@@ -226,7 +229,7 @@ Partial Class Form1
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(14, 10)
+        Me.Label4.Location = New System.Drawing.Point(14, 18)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(117, 13)
         Me.Label4.TabIndex = 12
@@ -235,14 +238,17 @@ Partial Class Form1
         'lbArchivos
         '
         Me.lbArchivos.FormattingEnabled = True
-        Me.lbArchivos.Location = New System.Drawing.Point(8, 29)
+        Me.lbArchivos.Location = New System.Drawing.Point(8, 39)
         Me.lbArchivos.Name = "lbArchivos"
         Me.lbArchivos.ScrollAlwaysVisible = True
-        Me.lbArchivos.Size = New System.Drawing.Size(191, 316)
+        Me.lbArchivos.Size = New System.Drawing.Size(191, 303)
         Me.lbArchivos.TabIndex = 7
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.chk3)
+        Me.GroupBox1.Controls.Add(Me.chk2)
+        Me.GroupBox1.Controls.Add(Me.chk1)
         Me.GroupBox1.Controls.Add(Me.cbotipomedidor)
         Me.GroupBox1.Controls.Add(Me.Label1)
         Me.GroupBox1.Controls.Add(Me.txtruta)
@@ -257,27 +263,28 @@ Partial Class Form1
         'cbotipomedidor
         '
         Me.cbotipomedidor.FormattingEnabled = True
-        Me.cbotipomedidor.Location = New System.Drawing.Point(118, 50)
+        Me.cbotipomedidor.Location = New System.Drawing.Point(10, 70)
         Me.cbotipomedidor.Name = "cbotipomedidor"
         Me.cbotipomedidor.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.cbotipomedidor.Size = New System.Drawing.Size(81, 21)
         Me.cbotipomedidor.TabIndex = 3
+        Me.cbotipomedidor.Visible = False
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(28, 53)
+        Me.Label1.Location = New System.Drawing.Point(16, 23)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(84, 13)
+        Me.Label1.Size = New System.Drawing.Size(90, 13)
         Me.Label1.TabIndex = 2
-        Me.Label1.Text = "Tipo de Medidor"
+        Me.Label1.Text = "Tipo de Medidor :"
         '
         'txtruta
         '
-        Me.txtruta.Location = New System.Drawing.Point(0, 97)
+        Me.txtruta.Location = New System.Drawing.Point(10, 97)
         Me.txtruta.Name = "txtruta"
         Me.txtruta.ReadOnly = True
-        Me.txtruta.Size = New System.Drawing.Size(344, 20)
+        Me.txtruta.Size = New System.Drawing.Size(174, 20)
         Me.txtruta.TabIndex = 1
         Me.txtruta.Visible = False
         '
@@ -323,6 +330,36 @@ Partial Class Form1
         Me.AyudaToolStripMenuItem.Name = "AyudaToolStripMenuItem"
         Me.AyudaToolStripMenuItem.Size = New System.Drawing.Size(53, 20)
         Me.AyudaToolStripMenuItem.Text = "Ayuda"
+        '
+        'chk1
+        '
+        Me.chk1.AutoSize = True
+        Me.chk1.Location = New System.Drawing.Point(124, 24)
+        Me.chk1.Name = "chk1"
+        Me.chk1.Size = New System.Drawing.Size(60, 17)
+        Me.chk1.TabIndex = 4
+        Me.chk1.Text = "S-1440"
+        Me.chk1.UseVisualStyleBackColor = True
+        '
+        'chk2
+        '
+        Me.chk2.AutoSize = True
+        Me.chk2.Location = New System.Drawing.Point(124, 47)
+        Me.chk2.Name = "chk2"
+        Me.chk2.Size = New System.Drawing.Size(60, 17)
+        Me.chk2.TabIndex = 5
+        Me.chk2.Text = "A-1800"
+        Me.chk2.UseVisualStyleBackColor = True
+        '
+        'chk3
+        '
+        Me.chk3.AutoSize = True
+        Me.chk3.Location = New System.Drawing.Point(124, 70)
+        Me.chk3.Name = "chk3"
+        Me.chk3.Size = New System.Drawing.Size(67, 17)
+        Me.chk3.TabIndex = 6
+        Me.chk3.Text = "MH-TAB"
+        Me.chk3.UseVisualStyleBackColor = True
         '
         'Form1
         '
@@ -389,4 +426,7 @@ Partial Class Form1
     Friend WithEvents MenuStrip1 As MenuStrip
     Friend WithEvents ActualizarMedidoresToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents AyudaToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents chk3 As CheckBox
+    Friend WithEvents chk2 As CheckBox
+    Friend WithEvents chk1 As CheckBox
 End Class

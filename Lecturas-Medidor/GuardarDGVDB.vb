@@ -25,7 +25,7 @@ Public Class GuardarDGVDB
         DGVReg = Module1.RegDB
 
         Dim NumImport As Integer
-        ConsultaNumImport(NumImport) ' obtener el último ID del lote de medidores en la DB
+        ConsultaNumImport(Module1.NombreSector, NumImport) ' obtener el último ID del lote de medidores en la DB
         CargarRegistros(DGVReg, NumImport)
 
         Dim filasT As Integer
@@ -41,7 +41,7 @@ Public Class GuardarDGVDB
         Me.Close()
 
     End Sub
-    Sub ConsultaNumImport(ByRef NumImport As String)
+    Sub ConsultaNumImport(ByVal NombreSector As String, ByRef NumImport As String)
 
         Dim objCon As SQLiteConnection
         Dim objCommand As SQLiteCommand
@@ -51,7 +51,8 @@ Public Class GuardarDGVDB
             objCon = New SQLiteConnection(cadena_conexion)
             objCon.Open()
             objCommand = objCon.CreateCommand()
-            objCommand.CommandText = "select  Max(NumImport) from Clientes"
+            'objCommand.CommandText = "select  Max(NumImport) from Clientes"
+            objCommand.CommandText = "select  Max(NumImport) from Padron_" & NombreSector
             objReader = objCommand.ExecuteReader()
 
             If objReader.Read() Then
@@ -82,12 +83,13 @@ Public Class GuardarDGVDB
 
         Dim dividirBloque As Integer = 50 'dividir los datos en querys
         With fs
-            .Write("insert into Historico (NumImport, Mes, CodigoEmpresa, CodigoSuministro, CodigoBarraCompra, FechaHora, EA) ")
+            .Write("insert into Historico (NumImport, Sector, Mes, CodigoEmpresa, CodigoSuministro, CodigoBarraCompra, FechaHora, EA) ")
             For intRow As Integer = 0 To DGV.RowCount - 1
 
                 Application.DoEvents()
                 .Write(" SELECT ")
                 .Write("""{0}"",", NumImport)
+                .Write("""{0}"",", Module1.NombreSector)
 
                 For intCol As Integer = 0 To DGV.Columns.Count - 1
                     Application.DoEvents()
@@ -106,7 +108,7 @@ Public Class GuardarDGVDB
 
                 If inquery = dividirBloque Then
                     .WriteLine("")
-                    .Write("insert into Historico (NumImport, Mes, CodigoEmpresa, CodigoSuministro, CodigoBarraCompra, FechaHora, EA) ")
+                    .Write("insert into Historico (NumImport, Sector, Mes, CodigoEmpresa, CodigoSuministro, CodigoBarraCompra, FechaHora, EA) ")
                     inquery = 0
                 End If
             Next

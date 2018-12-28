@@ -138,10 +138,10 @@ Public Class Form1
         'MsgBox(tipo_medidor)
         Select Case tipo_medidor
             Case "LP" : lecturaArchivo(dgvcontenido, ruta, " ", 2, 0)
-            Case "pr" : lecturaArchivo(dgvcontenido, ruta, ",", 0, 0)
+            Case "pr" : lecturaArchivo(dgvcontenido, ruta, ",", 1, 0)
             Case "ta" : lecturaArchivo(dgvcontenido, ruta, vbTab, 1, 0)
         End Select
-
+        eliminarPrimeralineaDGV(dgvcontenido)
         btnNuevo.Enabled = True
         btnExportUnit.Enabled = True
         btnExportMasivo.Enabled = True
@@ -169,9 +169,9 @@ Public Class Form1
         'MsgBox(tipo_medidor)
 
         Select Case tipo_medidor
-            Case "LP" : conteo = fila - 4
-            Case "pr" : conteo = fila - 2
-            Case "ta" : conteo = fila - 3
+            Case "LP" : conteo = fila - 3
+            Case "pr" : conteo = fila - 1
+            Case "ta" : conteo = fila - 2
         End Select
 
         If exportar = 1 Then
@@ -188,7 +188,7 @@ Public Class Form1
         Dim sLine As String = ""
         Dim fila As Integer = 0
         Dim fila2 As Integer = 0
-        'tabla.Rows.Clear()
+        Dim primero As Integer = 1 'verificar la primera línea de lecturas en el archivo de texto
         Dim codsuministro As String = ""
         Dim FTEA As String = ""
 
@@ -208,22 +208,16 @@ Public Class Form1
                     End If
                     'consulta a la DB
                     consulta(CStr(id_medidor), codsuministro, FTEA)
-                    'id_medidor = CInt(id_medidor)
-                    'MsgBox(id_medidor, MsgBoxStyle.Information, "leyendo")
                     fila += 1
-
                 Else
-                    If fila2 > numfila Then
-                        'MsgBox(sLine, MsgBoxStyle.Information, "leyendo")
-
+                    If fila2 >= numfila Then
+                        'MsgBox(sLine, MsgBoxStyle.Information, "leyendo")imero = primero + 1
                         agregarFilaCaso(tabla, sLine, caracter, id_medidor, codsuministro, FTEA, ruta)
                     End If
                     txtruta.Text = sLine
                     'MsgBox(sLine, MsgBoxStyle.Information, "leyendo")
                     fila2 += 1
                 End If
-                'MsgBox(id_medidor, MsgBoxStyle.Information, "leyendo")
-
             End If
             If exportar = 1 Then
                 ProgressBar1.Value = fila2
@@ -261,6 +255,14 @@ Public Class Form1
         tipo_medidor = ruta.Substring(ruta.LastIndexOf(".") + 1, 2)
         'MsgBox(tipo_medidor)
         Select Case tipo_medidor
+            Case "pr"
+                fech = CStr(arreglo(1).Substring(1, 8))
+                fech_hora = CStr(fech.Year) & (If(fech.Month < 10, 0 & fech.Month, fech.Month)) & CStr(If(fech.Day < 10, 0 & fech.Day, fech.Day)) &
+                            (Replace(arreglo(2).Substring(1, 5), ":", ""))
+                mes = fech.Month
+                Potencia = arreglo(4)
+                EA = ((Val(Potencia) * (Val(Replace(FTEA, ",", ".")) / 4)))
+                'MsgBox(CStr(EA), MsgBoxStyle.Information, "leyendo")
             Case "LP"
                 'MsgBox(arreglo(1)) ' hora    / 12:00:00
                 'MsgBox(arreglo(2)) 'am - fm  / a.m.;
@@ -285,15 +287,6 @@ Public Class Form1
                 mes = fech.Month
                 Potencia = arreglo(4)
                 EA = ((Val(Potencia) * (Val(Replace(FTEA, ",", ".")) / 4)))
-            Case "pr"
-                'MsgBox(arreglo(1))
-                fech = CStr(arreglo(1).Substring(1, 8))
-                fech_hora = CStr(fech.Year) & (If(fech.Month < 10, 0 & fech.Month, fech.Month)) & CStr(If(fech.Day < 10, 0 & fech.Day, fech.Day)) &
-                            (Replace(arreglo(2).Substring(1, 5), ":", ""))
-                mes = fech.Month
-                Potencia = arreglo(4)
-                EA = ((Val(Potencia) * (Val(Replace(FTEA, ",", ".")) / 4)))
-                'MsgBox(CStr(EA), MsgBoxStyle.Information, "leyendo")
             Case "ta"
                 'MsgBox(arreglo(1)) ' hora y am - fm / 04:45 a.m.
                 'MsgBox(arreglo(2))
@@ -322,9 +315,8 @@ Public Class Form1
                 'MsgBox(CStr(EA), MsgBoxStyle.Information, "leyendo")
         End Select
 
-
-
         EA = Math.Round(EA, 5)
+
         tabla.Rows.Add(mes, cod_empresa, IIf(codsuministro = "", "No Existe", codsuministro), cod_barra, fech_hora, CStr(EA))
 
     End Sub
@@ -604,8 +596,19 @@ Public Class Form1
             FlNm2 = name
             'MsgBox(FlNm2, MsgBoxStyle.Information, "leyendo")
             FlNm = "Exportados\" & FlNm2 & "--" & Now.Year & "-" & Now.Month & "-" & Now.Day & "--" & Now.Hour & "-" & Now.Minute & "-" & Now.Second & ".xls"
+
             If File.Exists(FlNm) Then File.Delete(FlNm)
             ExportToExcel(DGVTotal)
+
+            'generando el archivo de texto que contendra las lecturas faltantes
+            Report = "Exportados\Reporte" & FlNm2 & "--" & Now.Year & "-" & Now.Month & "-" & Now.Day & "--" & Now.Hour & "-" & Now.Minute & "-" & Now.Second & ".txt"
+            If File.Exists(Report) Then File.Delete(Report)
+            Dim fsR As New StreamWriter(Report, False)
+            With fsR
+                .WriteLine("Reporte de Lecturas Incompletas")
+                .WriteLine("===============================")
+                .Close()
+            End With
 
             Dim contadorReg As Integer = 1
             Dim newHojaExcel As Integer = 340 'division de hojas en la exportacion al archivo de excel
@@ -632,11 +635,14 @@ Public Class Form1
                         'MsgBox(tipo_medidor)
                         Select Case tipo_medidor
                             Case "LP" : lecturaArchivo(DGVTotal, ruta, " ", 2, id_medidor)
-                            Case "pr" : lecturaArchivo(DGVTotal, ruta, ",", 0, id_medidor)
+                            Case "pr" : lecturaArchivo(DGVTotal, ruta, ",", 1, id_medidor)
                             Case "ta" : lecturaArchivo(DGVTotal, ruta, vbTab, 1, id_medidor)
                         End Select
+                        eliminarPrimeralineaDGV(DGVTotal)
+                        'comprobar la integridad
+                        integridadLecturas(arregloTacna(intRow), DGVTotal)
 
-                        AddExcelBody(DGVTotal)
+                        AddExcelBody(DGVTotal) 'agregar el contenido al cuerpo del excel
 
                         'guardar los registros en la base de datos
                         Module1.RegDB = DGVTotal
@@ -688,9 +694,13 @@ Public Class Form1
                         'MsgBox(tipo_medidor)
                         Select Case tipo_medidor
                             Case "LP" : lecturaArchivo(DGVTotal, ruta, " ", 2, id_medidor)
-                            Case "pr" : lecturaArchivo(DGVTotal, ruta, ",", 0, id_medidor)
+                            Case "pr" : lecturaArchivo(DGVTotal, ruta, ",", 1, id_medidor)
                             Case "ta" : lecturaArchivo(DGVTotal, ruta, vbTab, 1, id_medidor)
                         End Select
+
+                        eliminarPrimeralineaDGV(DGVTotal)
+                        'comprobar la integridad
+                        integridadLecturas(arregloMoquegua(intRow), DGVTotal)
 
                         AddExcelBody(DGVTotal)
 
@@ -745,9 +755,13 @@ Public Class Form1
                         'MsgBox(tipo_medidor)
                         Select Case tipo_medidor
                             Case "LP" : lecturaArchivo(DGVTotal, ruta, " ", 2, id_medidor)
-                            Case "pr" : lecturaArchivo(DGVTotal, ruta, ",", 0, id_medidor)
+                            Case "pr" : lecturaArchivo(DGVTotal, ruta, ",", 1, id_medidor)
                             Case "ta" : lecturaArchivo(DGVTotal, ruta, vbTab, 1, id_medidor)
                         End Select
+
+                        eliminarPrimeralineaDGV(DGVTotal)
+                        'comprobar la integridad
+                        integridadLecturas(arregloIlo(intRow), DGVTotal)
 
                         AddExcelBody(DGVTotal)
 
@@ -902,5 +916,70 @@ Public Class Form1
             objCon.Close()
         End Try
 
+    End Sub
+    'reporte de lecturas incompletas
+    Dim Report As String
+    Dim ContNombres As New List(Of String)
+    Sub integridadLecturas(ByVal id_medidorserie As String, ByVal dgv As DataGridView)
+        Dim id_serie As Integer
+        Dim anio As String
+        Dim mes As String
+        Dim cant_dias As Integer
+        Dim cant_lecturas As Integer
+        id_serie = CInt(Val(id_medidorserie))
+
+        Dim ListaParaComparar As New List(Of String)
+        Dim ListaCompleta As New List(Of String)
+
+        anio = dgv.Item(4, 1).Value.ToString().Substring(0, 4) 'obtenemo el formato 201807010015 -- 2018-07-01-00-15
+        mes = dgv.Item(4, 1).Value.ToString().Substring(4, 2)
+
+        cant_dias = System.DateTime.DaysInMonth(anio, mes) 'Obtiene la cantidad de días indicandole el Año y el Mes
+        cant_lecturas = (cant_dias * 4) 'cantidad de lecturas por mes
+
+        For intdias As Integer = 1 To cant_dias
+            For inthoras As Integer = 0 To 23
+                ListaCompleta.Add(anio & mes & IIf(intdias < 10, "0" & intdias, intdias) & IIf(inthoras < 10, "0" & inthoras, inthoras) & "00")
+                ListaCompleta.Add(anio & mes & IIf(intdias < 10, "0" & intdias, intdias) & IIf(inthoras < 10, "0" & inthoras, inthoras) & "15")
+                ListaCompleta.Add(anio & mes & IIf(intdias < 10, "0" & intdias, intdias) & IIf(inthoras < 10, "0" & inthoras, inthoras) & "30")
+                ListaCompleta.Add(anio & mes & IIf(intdias < 10, "0" & intdias, intdias) & IIf(inthoras < 10, "0" & inthoras, inthoras) & "45")
+            Next
+        Next
+        ListaCompleta.Add(anio & IIf((Val(mes) + 1) < 10, "0" & Val(mes) + 1, Val(mes) + 1) & "010000")
+        If ListaCompleta.Item(0).Contains("0000") Then
+            ListaCompleta.RemoveAt(0)
+        End If
+        'MsgBox(ListaParaComparar.Item(2))
+
+        For intRow As Integer = 0 To dgv.RowCount - 1
+            ListaParaComparar.Add(dgv.Item(4, intRow).Value.ToString())
+        Next
+
+        Dim ListadeDiferencias As List(Of String) = ListaCompleta.Except(ListaParaComparar).ToList()
+
+        Dim texto As New StreamWriter(Report, True)
+        With texto
+            .WriteLine("Nombre del Archivo : {0}", id_medidorserie)
+            .WriteLine("Lecturas Faltantes:")
+            For ii = 0 To ListadeDiferencias.Count - 1
+                .WriteLine("                   {0}", ListadeDiferencias.Item(ii))
+            Next ii
+            .WriteLine("")
+            .WriteLine("")
+            .Close()
+        End With
+
+        'Module1.integridadLecturas = ListadeDiferencias
+        '
+        'Dim formDB As New IntegridadLecturas
+        'formDB.ShowDialog()
+
+        ListaParaComparar.Clear()
+        ListaCompleta.Clear()
+    End Sub
+    Sub eliminarPrimeralineaDGV(ByVal DGV As DataGridView)
+        If (DGV.Item(4, 0).Value.ToString().Substring(8, 4) = "0000") Then
+            DGV.Rows.RemoveAt(0)
+        End If
     End Sub
 End Class

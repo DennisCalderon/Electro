@@ -640,7 +640,7 @@ Public Class Form1
                         End Select
                         eliminarPrimeralineaDGV(DGVTotal)
                         'comprobar la integridad
-                        integridadLecturas(arregloTacna(intRow), DGVTotal)
+                        integridadLecturas(arregloTacna(intRow), DGVTotal, "Tacna")
 
                         AddExcelBody(DGVTotal) 'agregar el contenido al cuerpo del excel
 
@@ -700,7 +700,7 @@ Public Class Form1
 
                         eliminarPrimeralineaDGV(DGVTotal)
                         'comprobar la integridad
-                        integridadLecturas(arregloMoquegua(intRow), DGVTotal)
+                        integridadLecturas(arregloMoquegua(intRow), DGVTotal, "Moquegua")
 
                         AddExcelBody(DGVTotal)
 
@@ -761,11 +761,11 @@ Public Class Form1
 
                         eliminarPrimeralineaDGV(DGVTotal)
                         'comprobar la integridad
-                        integridadLecturas(arregloIlo(intRow), DGVTotal)
+                        integridadLecturas(arregloIlo(intRow), DGVTotal, "Ilo")
 
                         AddExcelBody(DGVTotal)
 
-                        'guardar los registros en la base de datos
+                        ''guardar los registros en la base de datos
                         Module1.RegDB = DGVTotal
                         Module1.NombreSector = "Ilo"
                         Dim formDB As New GuardarDGVDB
@@ -920,7 +920,7 @@ Public Class Form1
     'reporte de lecturas incompletas
     Dim Report As String
     Dim ContNombres As New List(Of String)
-    Sub integridadLecturas(ByVal id_medidorserie As String, ByVal dgv As DataGridView)
+    Sub integridadLecturas(ByVal id_medidorserie As String, ByVal dgv As DataGridView, ByVal NombreSector As String)
         Dim id_serie As Integer
         Dim anio As String
         Dim mes As String
@@ -960,9 +960,16 @@ Public Class Form1
         Dim texto As New StreamWriter(Report, True)
         With texto
             .WriteLine("Nombre del Archivo : {0}", id_medidorserie)
+            .WriteLine("Nombre del Sector : {0}", NombreSector)
             .WriteLine("Lecturas Faltantes:")
             For ii = 0 To ListadeDiferencias.Count - 1
-                .WriteLine("                   {0}", ListadeDiferencias.Item(ii))
+                Dim fechaReg As String
+                Dim horaReg As String
+                Dim imprimerReg As String
+                fechaReg = ListadeDiferencias.Item(ii).Substring(0, 4) & "-" & ListadeDiferencias.Item(ii).Substring(4, 2) & "-" & ListadeDiferencias.Item(ii).Substring(6, 2)
+                horaReg = ListadeDiferencias.Item(ii).Substring(8, 2) & ":" & ListadeDiferencias.Item(ii).Substring(10, 2)
+                imprimerReg = "Fecha :" & fechaReg & " y Hora: " & horaReg
+                .WriteLine("                   {0}", imprimerReg)
             Next ii
             .WriteLine("")
             .WriteLine("")

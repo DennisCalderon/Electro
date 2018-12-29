@@ -139,7 +139,6 @@ Public Class datos
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         'MsgBox(dgvmedidor.Rows(1).Cells(4).Value.ToString())
-        cboSector.Enabled = False
         Button1.Enabled = False
         Button2.Enabled = False
         Button3.Enabled = False
@@ -175,7 +174,6 @@ Public Class datos
         ActualizarPadronGeneral()
         ProgressBar1.Value = 0
         Me.Close()
-        cboSector.Enabled = True
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click

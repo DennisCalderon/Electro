@@ -4,14 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8B35EBBC-8AD9-4146-BD1F-E41443491E3B}</ProjectGuid>
+    <ProjectGuid>{93CD1B12-C9CD-4277-B220-884384597580}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>Lecturas_Medidor.My.MyApplication</StartupObject>
-    <RootNamespace>Lecturas_Medidor</RootNamespace>
-    <AssemblyName>Lecturas-Medidor</AssemblyName>
+    <StartupObject>Lectura_Medidor.My.MyApplication</StartupObject>
+    <RootNamespace>Lectura_Medidor</RootNamespace>
+    <AssemblyName>Lectura-Medidor</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -22,7 +23,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>Lecturas-Medidor.xml</DocumentationFile>
+    <DocumentationFile>Lectura-Medidor.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -32,7 +33,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>Lecturas-Medidor.xml</DocumentationFile>
+    <DocumentationFile>Lectura-Medidor.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -48,7 +49,7 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>medidor.ico</ApplicationIcon>
+    <ApplicationIcon>Iconos\medidor.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -57,12 +58,7 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="System">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll</HintPath>
-    </Reference>
+    <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SQLite, Version=1.0.109.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
@@ -97,38 +93,29 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="datos.Designer.vb">
-      <DependentUpon>datos.vb</DependentUpon>
-    </Compile>
-    <Compile Include="datos.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dev.Designer.vb">
-      <DependentUpon>Dev.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Dev.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.vb">
-      <DependentUpon>Form1.vb</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="GuardarDGVDB.Designer.vb">
       <DependentUpon>GuardarDGVDB.vb</DependentUpon>
     </Compile>
     <Compile Include="GuardarDGVDB.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="IntegridadLecturas.Designer.vb">
-      <DependentUpon>IntegridadLecturas.vb</DependentUpon>
+    <Compile Include="MArchivos.vb" />
+    <Compile Include="MConsultasDB.vb" />
+    <Compile Include="MExportExcel.vb" />
+    <Compile Include="MVariables.vb" />
+    <Compile Include="PadronClientes.Designer.vb">
+      <DependentUpon>PadronClientes.vb</DependentUpon>
     </Compile>
-    <Compile Include="IntegridadLecturas.vb">
+    <Compile Include="PadronClientes.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Module1.vb" />
+    <Compile Include="Principal.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Principal.Designer.vb">
+      <DependentUpon>Principal.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -150,22 +137,22 @@
     <Compile Include="RegistrosVacios.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Soporte.Designer.vb">
+      <DependentUpon>Soporte.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Soporte.vb">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="datos.resx">
-      <DependentUpon>datos.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Dev.resx">
-      <DependentUpon>Dev.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="GuardarDGVDB.resx">
       <DependentUpon>GuardarDGVDB.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IntegridadLecturas.resx">
-      <DependentUpon>IntegridadLecturas.vb</DependentUpon>
+    <EmbeddedResource Include="PadronClientes.resx">
+      <DependentUpon>PadronClientes.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Principal.resx">
+      <DependentUpon>Principal.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -175,6 +162,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RegistrosVacios.resx">
       <DependentUpon>RegistrosVacios.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Soporte.resx">
+      <DependentUpon>Soporte.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -191,7 +181,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="medidor.ico" />
+    <Content Include="Iconos\buscar.png" />
+    <Content Include="Iconos\masivo.png" />
+    <Content Include="Iconos\medidor.ico" />
+    <Content Include="Iconos\nuevo.png" />
+    <Content Include="Iconos\registro.png" />
+    <Content Include="Iconos\unitario.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.109.2\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.109.2\build\net45\System.Data.SQLite.Core.targets')" />

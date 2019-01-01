@@ -8,17 +8,17 @@ Imports System.Runtime.InteropServices
 
 ' Revisar los valores de los atributos del ensamblado
 
-<Assembly: AssemblyTitle("Lecturas-Medidor")>
+<Assembly: AssemblyTitle("Lectura-Medidor")>
 <Assembly: AssemblyDescription("")>
 <Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("Lecturas-Medidor")>
-<Assembly: AssemblyCopyright("Copyright ©  2018")>
+<Assembly: AssemblyProduct("Lectura-Medidor")>
+<Assembly: AssemblyCopyright("Copyright ©  2019")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
 
 'El siguiente GUID sirve como id. de typelib si este proyecto se expone a COM.
-<Assembly: Guid("46c43658-3dfd-4d96-8ae7-20dc6bffc0f3")>
+<Assembly: Guid("93227427-42b2-46a4-aeda-f6d85b990ca4")>
 
 ' La información de versión de un ensamblado consta de los cuatro valores siguientes:
 '

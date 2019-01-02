@@ -99,7 +99,6 @@
     <Compile Include="GuardarDGVDB.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MArchivos.vb" />
     <Compile Include="MConsultasDB.vb" />
     <Compile Include="MExportExcel.vb" />
     <Compile Include="MVariables.vb" />
@@ -107,6 +106,12 @@
       <DependentUpon>PadronClientes.vb</DependentUpon>
     </Compile>
     <Compile Include="PadronClientes.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PadronClientesExcel.Designer.vb">
+      <DependentUpon>PadronClientesExcel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PadronClientesExcel.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Principal.vb">
@@ -150,6 +155,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PadronClientes.resx">
       <DependentUpon>PadronClientes.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PadronClientesExcel.resx">
+      <DependentUpon>PadronClientesExcel.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Principal.resx">
       <DependentUpon>Principal.vb</DependentUpon>

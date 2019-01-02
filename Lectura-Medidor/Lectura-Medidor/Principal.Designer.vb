@@ -23,12 +23,12 @@ Partial Class Principal
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Principal))
-        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle21 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle22 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle23 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle24 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle55 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle56 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle57 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle58 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle59 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle60 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.chkLibres = New System.Windows.Forms.CheckBox()
@@ -100,7 +100,7 @@ Partial Class Principal
         'chkLibres
         '
         Me.chkLibres.AutoSize = True
-        Me.chkLibres.Location = New System.Drawing.Point(250, 58)
+        Me.chkLibres.Location = New System.Drawing.Point(250, 71)
         Me.chkLibres.Name = "chkLibres"
         Me.chkLibres.Size = New System.Drawing.Size(54, 17)
         Me.chkLibres.TabIndex = 11
@@ -110,7 +110,7 @@ Partial Class Principal
         'chkIlo
         '
         Me.chkIlo.AutoSize = True
-        Me.chkIlo.Location = New System.Drawing.Point(250, 35)
+        Me.chkIlo.Location = New System.Drawing.Point(250, 52)
         Me.chkIlo.Name = "chkIlo"
         Me.chkIlo.Size = New System.Drawing.Size(37, 17)
         Me.chkIlo.TabIndex = 10
@@ -120,7 +120,7 @@ Partial Class Principal
         'chkMoquegua
         '
         Me.chkMoquegua.AutoSize = True
-        Me.chkMoquegua.Location = New System.Drawing.Point(164, 58)
+        Me.chkMoquegua.Location = New System.Drawing.Point(170, 71)
         Me.chkMoquegua.Name = "chkMoquegua"
         Me.chkMoquegua.Size = New System.Drawing.Size(77, 17)
         Me.chkMoquegua.TabIndex = 9
@@ -130,7 +130,7 @@ Partial Class Principal
         'chkTacna
         '
         Me.chkTacna.AutoSize = True
-        Me.chkTacna.Location = New System.Drawing.Point(165, 35)
+        Me.chkTacna.Location = New System.Drawing.Point(171, 52)
         Me.chkTacna.Name = "chkTacna"
         Me.chkTacna.Size = New System.Drawing.Size(57, 17)
         Me.chkTacna.TabIndex = 8
@@ -142,9 +142,9 @@ Partial Class Principal
         Me.Label2.AutoSize = True
         Me.Label2.Location = New System.Drawing.Point(141, 18)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(87, 13)
+        Me.Label2.Size = New System.Drawing.Size(108, 26)
         Me.Label2.TabIndex = 7
-        Me.Label2.Text = "Lista de Padrón :"
+        Me.Label2.Text = "Lista de Padrón para " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Exportación Masiva:"
         '
         'chkMHTAB
         '
@@ -187,10 +187,10 @@ Partial Class Principal
         '
         'txtruta
         '
-        Me.txtruta.Location = New System.Drawing.Point(144, 95)
+        Me.txtruta.Location = New System.Drawing.Point(6, 99)
         Me.txtruta.Name = "txtruta"
         Me.txtruta.ReadOnly = True
-        Me.txtruta.Size = New System.Drawing.Size(174, 20)
+        Me.txtruta.Size = New System.Drawing.Size(319, 20)
         Me.txtruta.TabIndex = 1
         Me.txtruta.Visible = False
         '
@@ -246,8 +246,8 @@ Partial Class Principal
         '
         'Column1
         '
-        DataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column1.DefaultCellStyle = DataGridViewCellStyle19
+        DataGridViewCellStyle55.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column1.DefaultCellStyle = DataGridViewCellStyle55
         Me.Column1.HeaderText = "Mes"
         Me.Column1.Name = "Column1"
         Me.Column1.ReadOnly = True
@@ -255,8 +255,8 @@ Partial Class Principal
         '
         'Column2
         '
-        DataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column2.DefaultCellStyle = DataGridViewCellStyle20
+        DataGridViewCellStyle56.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column2.DefaultCellStyle = DataGridViewCellStyle56
         Me.Column2.HeaderText = "Código de Empresa"
         Me.Column2.Name = "Column2"
         Me.Column2.ReadOnly = True
@@ -264,8 +264,8 @@ Partial Class Principal
         '
         'Column3
         '
-        DataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column3.DefaultCellStyle = DataGridViewCellStyle21
+        DataGridViewCellStyle57.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column3.DefaultCellStyle = DataGridViewCellStyle57
         Me.Column3.HeaderText = "Código de Suministro"
         Me.Column3.Name = "Column3"
         Me.Column3.ReadOnly = True
@@ -273,8 +273,8 @@ Partial Class Principal
         '
         'Column4
         '
-        DataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column4.DefaultCellStyle = DataGridViewCellStyle22
+        DataGridViewCellStyle58.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column4.DefaultCellStyle = DataGridViewCellStyle58
         Me.Column4.HeaderText = "Código de Barra de Compra"
         Me.Column4.Name = "Column4"
         Me.Column4.ReadOnly = True
@@ -283,8 +283,8 @@ Partial Class Principal
         'Column5
         '
         Me.Column5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        DataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column5.DefaultCellStyle = DataGridViewCellStyle23
+        DataGridViewCellStyle59.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column5.DefaultCellStyle = DataGridViewCellStyle59
         Me.Column5.HeaderText = "Fecha /Hora"
         Me.Column5.Name = "Column5"
         Me.Column5.ReadOnly = True
@@ -292,8 +292,8 @@ Partial Class Principal
         '
         'Column6
         '
-        DataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column6.DefaultCellStyle = DataGridViewCellStyle24
+        DataGridViewCellStyle60.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column6.DefaultCellStyle = DataGridViewCellStyle60
         Me.Column6.HeaderText = "EA"
         Me.Column6.Name = "Column6"
         Me.Column6.ReadOnly = True

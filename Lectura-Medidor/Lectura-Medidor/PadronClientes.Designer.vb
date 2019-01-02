@@ -36,14 +36,14 @@ Partial Class PadronClientes
         'cboSector
         '
         Me.cboSector.FormattingEnabled = True
-        Me.cboSector.Location = New System.Drawing.Point(33, 11)
+        Me.cboSector.Location = New System.Drawing.Point(33, 13)
         Me.cboSector.Name = "cboSector"
         Me.cboSector.Size = New System.Drawing.Size(121, 21)
         Me.cboSector.TabIndex = 12
         '
         'btnMostrarPadron
         '
-        Me.btnMostrarPadron.Location = New System.Drawing.Point(160, 5)
+        Me.btnMostrarPadron.Location = New System.Drawing.Point(160, 7)
         Me.btnMostrarPadron.Name = "btnMostrarPadron"
         Me.btnMostrarPadron.Size = New System.Drawing.Size(141, 31)
         Me.btnMostrarPadron.TabIndex = 11
@@ -59,7 +59,7 @@ Partial Class PadronClientes
         '
         'btnProcesar
         '
-        Me.btnProcesar.Location = New System.Drawing.Point(497, 5)
+        Me.btnProcesar.Location = New System.Drawing.Point(497, 7)
         Me.btnProcesar.Name = "btnProcesar"
         Me.btnProcesar.Size = New System.Drawing.Size(114, 31)
         Me.btnProcesar.TabIndex = 9
@@ -68,7 +68,7 @@ Partial Class PadronClientes
         '
         'btnCargarExcel
         '
-        Me.btnCargarExcel.Location = New System.Drawing.Point(389, 5)
+        Me.btnCargarExcel.Location = New System.Drawing.Point(389, 7)
         Me.btnCargarExcel.Name = "btnCargarExcel"
         Me.btnCargarExcel.Size = New System.Drawing.Size(75, 31)
         Me.btnCargarExcel.TabIndex = 8
@@ -87,7 +87,7 @@ Partial Class PadronClientes
         '
         'btnExportar
         '
-        Me.btnExportar.Location = New System.Drawing.Point(690, 5)
+        Me.btnExportar.Location = New System.Drawing.Point(690, 7)
         Me.btnExportar.Name = "btnExportar"
         Me.btnExportar.Size = New System.Drawing.Size(75, 31)
         Me.btnExportar.TabIndex = 13

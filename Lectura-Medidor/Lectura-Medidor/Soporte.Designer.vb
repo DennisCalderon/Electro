@@ -87,11 +87,11 @@ Partial Class Soporte
         Me.Label2.AutoSize = True
         Me.Label2.Location = New System.Drawing.Point(30, 9)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(445, 26)
+        Me.Label2.Size = New System.Drawing.Size(447, 26)
         Me.Label2.TabIndex = 10
         Me.Label2.Text = "Sistema Desarrollado a Pedido del Sr. Victor Condori Choque Supervisor del Área d" &
-    "e Servico " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "de Clientes Mayores y asesorado por el Sr. Oliver Cabrera Cutipa Bac" &
-    "hiller en Ingeniería"
+    "e Servicio " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "de Clientes Mayores y asesorado por el Sr. Oliver Cabrera Cutipa Ba" &
+    "chiller en Ingeniería"
         '
         'Label1
         '

@@ -85,6 +85,9 @@ Public Class Principal
     End Sub
 
     Private Sub Principal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        'Consultar Estado del Guardado en la Base de Datos
+        MConsultasDB.ConsultaOpcionesDB(MVariables.GuardarDB)
+
         btnNuevo.Enabled = False
         btnExportUnit.Enabled = False
         btnExportMasivo.Enabled = False
@@ -529,11 +532,13 @@ Public Class Principal
 
                     MExportExcel.AddExcelBody(DGVTotal, FlNm) 'agregar el contenido al cuerpo del excel
 
-                    'guardar los registros en la base de datos
-                    MVariables.RegDB = DGVTotal
-                    MVariables.NombreSector = "Tacna"
-                    Dim formDB As New GuardarDGVDB
-                    formDB.ShowDialog()
+                    If (MVariables.GuardarDB = "1") Then
+                        'guardar los registros en la base de datos
+                        MVariables.RegDB = DGVTotal
+                        MVariables.NombreSector = "Tacna"
+                        Dim formDB As New GuardarDGVDB
+                        formDB.ShowDialog()
+                    End If
 
                     DGVTotal.Rows.Clear()
 
@@ -587,11 +592,13 @@ Public Class Principal
 
                     MExportExcel.AddExcelBody(DGVTotal, FlNm) 'agregar el contenido al cuerpo del excel
 
-                    'guardar los registros en la base de datos
-                    MVariables.RegDB = DGVTotal
-                    MVariables.NombreSector = "Moquegua"
-                    Dim formDB As New GuardarDGVDB
-                    formDB.ShowDialog()
+                    If (MVariables.GuardarDB = "1") Then
+                        'guardar los registros en la base de datos
+                        MVariables.RegDB = DGVTotal
+                        MVariables.NombreSector = "Moquegua"
+                        Dim formDB As New GuardarDGVDB
+                        formDB.ShowDialog()
+                    End If
 
                     DGVTotal.Rows.Clear()
 
@@ -646,11 +653,13 @@ Public Class Principal
 
                     MExportExcel.AddExcelBody(DGVTotal, FlNm) 'agregar el contenido al cuerpo del excel
 
-                    ''guardar los registros en la base de datos
-                    MVariables.RegDB = DGVTotal
-                    MVariables.NombreSector = "Ilo"
-                    Dim formDB As New GuardarDGVDB
-                    formDB.ShowDialog()
+                    If (MVariables.GuardarDB = "1") Then
+                        'guardar los registros en la base de datos
+                        MVariables.RegDB = DGVTotal
+                        MVariables.NombreSector = "Ilo"
+                        Dim formDB As New GuardarDGVDB
+                        formDB.ShowDialog()
+                    End If
 
                     DGVTotal.Rows.Clear()
 
@@ -702,11 +711,13 @@ Public Class Principal
 
                     MExportExcel.AddExcelBody(DGVTotal, FlNm) 'agregar el contenido al cuerpo del excel
 
-                    'guardar los registros en la base de datos
-                    MVariables.RegDB = DGVTotal
-                    MVariables.NombreSector = "Libres"
-                    Dim formDB As New GuardarDGVDB
-                    formDB.ShowDialog()
+                    If (MVariables.GuardarDB = "1") Then
+                        'guardar los registros en la base de datos
+                        MVariables.RegDB = DGVTotal
+                        MVariables.NombreSector = "Libres"
+                        Dim formDB As New GuardarDGVDB
+                        formDB.ShowDialog()
+                    End If
 
                     DGVTotal.Rows.Clear()
 
@@ -757,4 +768,14 @@ Public Class Principal
     'reporte de lecturas incompletas
     Dim Report As String
     Dim ContNombres As New List(Of String)
+
+    Private Sub OpcionesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpcionesToolStripMenuItem.Click
+        Dim form As New Opciones
+        form.ShowDialog()
+    End Sub
+
+    Private Sub AyudaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AyudaToolStripMenuItem.Click
+        Dim form As New Soporte
+        form.ShowDialog()
+    End Sub
 End Class

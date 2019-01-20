@@ -23,12 +23,12 @@ Partial Class Principal
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Principal))
-        Dim DataGridViewCellStyle55 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle56 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle57 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle58 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle59 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle60 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.chkLibres = New System.Windows.Forms.CheckBox()
@@ -61,6 +61,7 @@ Partial Class Principal
         Me.btnNuevo = New System.Windows.Forms.Button()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.ActualizarMedidoresToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.OpcionesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AyudaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.GroupBox1.SuspendLayout()
@@ -246,8 +247,8 @@ Partial Class Principal
         '
         'Column1
         '
-        DataGridViewCellStyle55.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column1.DefaultCellStyle = DataGridViewCellStyle55
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column1.DefaultCellStyle = DataGridViewCellStyle1
         Me.Column1.HeaderText = "Mes"
         Me.Column1.Name = "Column1"
         Me.Column1.ReadOnly = True
@@ -255,8 +256,8 @@ Partial Class Principal
         '
         'Column2
         '
-        DataGridViewCellStyle56.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column2.DefaultCellStyle = DataGridViewCellStyle56
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column2.DefaultCellStyle = DataGridViewCellStyle2
         Me.Column2.HeaderText = "Código de Empresa"
         Me.Column2.Name = "Column2"
         Me.Column2.ReadOnly = True
@@ -264,8 +265,8 @@ Partial Class Principal
         '
         'Column3
         '
-        DataGridViewCellStyle57.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column3.DefaultCellStyle = DataGridViewCellStyle57
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column3.DefaultCellStyle = DataGridViewCellStyle3
         Me.Column3.HeaderText = "Código de Suministro"
         Me.Column3.Name = "Column3"
         Me.Column3.ReadOnly = True
@@ -273,8 +274,8 @@ Partial Class Principal
         '
         'Column4
         '
-        DataGridViewCellStyle58.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column4.DefaultCellStyle = DataGridViewCellStyle58
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column4.DefaultCellStyle = DataGridViewCellStyle4
         Me.Column4.HeaderText = "Código de Barra de Compra"
         Me.Column4.Name = "Column4"
         Me.Column4.ReadOnly = True
@@ -283,8 +284,8 @@ Partial Class Principal
         'Column5
         '
         Me.Column5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        DataGridViewCellStyle59.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column5.DefaultCellStyle = DataGridViewCellStyle59
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column5.DefaultCellStyle = DataGridViewCellStyle5
         Me.Column5.HeaderText = "Fecha /Hora"
         Me.Column5.Name = "Column5"
         Me.Column5.ReadOnly = True
@@ -292,8 +293,8 @@ Partial Class Principal
         '
         'Column6
         '
-        DataGridViewCellStyle60.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column6.DefaultCellStyle = DataGridViewCellStyle60
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column6.DefaultCellStyle = DataGridViewCellStyle6
         Me.Column6.HeaderText = "EA"
         Me.Column6.Name = "Column6"
         Me.Column6.ReadOnly = True
@@ -374,7 +375,7 @@ Partial Class Principal
         'MenuStrip1
         '
         Me.MenuStrip1.BackColor = System.Drawing.Color.Silver
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ActualizarMedidoresToolStripMenuItem, Me.AyudaToolStripMenuItem})
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ActualizarMedidoresToolStripMenuItem, Me.OpcionesToolStripMenuItem, Me.AyudaToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Size = New System.Drawing.Size(729, 24)
@@ -386,6 +387,12 @@ Partial Class Principal
         Me.ActualizarMedidoresToolStripMenuItem.Name = "ActualizarMedidoresToolStripMenuItem"
         Me.ActualizarMedidoresToolStripMenuItem.Size = New System.Drawing.Size(115, 20)
         Me.ActualizarMedidoresToolStripMenuItem.Text = "Actualizar  Padrón"
+        '
+        'OpcionesToolStripMenuItem
+        '
+        Me.OpcionesToolStripMenuItem.Name = "OpcionesToolStripMenuItem"
+        Me.OpcionesToolStripMenuItem.Size = New System.Drawing.Size(69, 20)
+        Me.OpcionesToolStripMenuItem.Text = "Opciones"
         '
         'AyudaToolStripMenuItem
         '
@@ -464,4 +471,5 @@ Partial Class Principal
     Friend WithEvents chkMoquegua As CheckBox
     Friend WithEvents chkTacna As CheckBox
     Friend WithEvents Label2 As Label
+    Friend WithEvents OpcionesToolStripMenuItem As ToolStripMenuItem
 End Class

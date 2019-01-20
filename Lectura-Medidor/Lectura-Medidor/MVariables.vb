@@ -3,4 +3,5 @@
     Public verificarProceso As Integer
     Public NombreSector As String
     Public RegDB As DataGridView
+    Public GuardarDB As String
 End Module

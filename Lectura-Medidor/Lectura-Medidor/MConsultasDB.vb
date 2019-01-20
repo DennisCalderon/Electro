@@ -191,7 +191,7 @@ Module MConsultasDB
             dgvPadron.DataSource = dt
         End Using
     End Sub
-    Sub ConsultaSector(ByVal serie As String, ByRef NombreSector As String)
+    Public Sub ConsultaSector(ByVal serie As String, ByRef NombreSector As String)
 
         Dim objCon As SQLiteConnection
         Dim objCommand As SQLiteCommand
@@ -211,6 +211,51 @@ Module MConsultasDB
                 NombreSector = objReader.Item("NombreSector").ToString
                 'MsgBox(CStr(FTEA), MsgBoxStyle.Information, "leyendo")
             End If
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        Finally
+            objCommand.Dispose()
+            objReader.Close()
+            objCon.Close()
+        End Try
+    End Sub
+    Public Sub ConsultaOpcionesDB(ByRef GuardarDB As String)
+
+        Dim objCon As SQLiteConnection
+        Dim objCommand As SQLiteCommand
+        Dim objReader As SQLiteDataReader
+
+        Try
+            objCon = New SQLiteConnection(cadena_conexion)
+            objCon.Open()
+            objCommand = objCon.CreateCommand()
+            objCommand.CommandText = "select DataBaseGuardar from OpcionesDB "
+            objReader = objCommand.ExecuteReader()
+
+            If objReader.Read() Then
+                GuardarDB = objReader.Item("DataBaseGuardar").ToString
+            End If
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        Finally
+            objCommand.Dispose()
+            objReader.Close()
+            objCon.Close()
+        End Try
+    End Sub
+    Public Sub ActualizarOpcionesDB(ByVal GuardarDB As String)
+
+        Dim objCon As SQLiteConnection
+        Dim objCommand As SQLiteCommand
+        Dim objReader As SQLiteDataReader
+
+        Try
+            objCon = New SQLiteConnection(cadena_conexion)
+            objCon.Open()
+            objCommand = objCon.CreateCommand()
+            objCommand.CommandText = "update OpcionesDB set DataBaseGuardar=""" & GuardarDB & """ "
+            objReader = objCommand.ExecuteReader()
+
         Catch ex As Exception
             MsgBox(ex.ToString)
         Finally

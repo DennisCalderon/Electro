@@ -264,4 +264,25 @@ Module MConsultasDB
             objCon.Close()
         End Try
     End Sub
+    Public Sub ActualizarPadronCliente(ByVal NumImport As Integer, ByVal Item As Integer, ByVal CodigoRutaSuministro As String, ByVal CodigoSuministro As String, ByVal NombreSuministro As String, ByVal DireccionPredio As String, ByVal NombreSector As String, ByVal Tension As String, ByVal Tarifa As String, ByVal SistemaElectrico As String, ByVal ActividadEconomica As String, ByVal FactorTension As String, ByVal FactorCorriente As String, ByVal FactorTransformacionEA As String, ByVal MarcaDelMedidor As String, ByVal Modelo As String, ByVal Serie As String)
+
+        Dim objCon As SQLiteConnection
+        Dim objCommand As SQLiteCommand
+        Dim objReader As SQLiteDataReader
+
+        Try
+            objCon = New SQLiteConnection(cadena_conexion)
+            objCon.Open()
+            objCommand = objCon.CreateCommand()
+            objCommand.CommandText = "update Padron_" & NombreSector & " set CodigoRutaSuministro=""" & CodigoRutaSuministro & """ , CodigoSuministro=""" & CodigoSuministro & """ , NombreSuministro=""" & NombreSuministro & """ , DireccionPredio=""" & DireccionPredio & """ , NombreSector=""" & NombreSector & """ , Tension=""" & Tension & """ , Tarifa=""" & Tarifa & """ , SistemaElectrico=""" & SistemaElectrico & """ , ActividadEconomica=""" & ActividadEconomica & """ , FactorTension=""" & FactorTension & """ , FactorCorriente=""" & FactorCorriente & """ , FactorTransformacionEA=""" & FactorTransformacionEA & """ , MarcaDelMedidor=""" & MarcaDelMedidor & """ , Modelo=""" & Modelo & """ , Serie=""" & Serie & """ where NumImport=" & NumImport & " and Item=" & Item & " "
+            objReader = objCommand.ExecuteReader()
+
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        Finally
+            objCommand.Dispose()
+            objReader.Close()
+            objCon.Close()
+        End Try
+    End Sub
 End Module

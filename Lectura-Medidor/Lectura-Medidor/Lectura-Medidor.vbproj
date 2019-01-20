@@ -93,6 +93,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EditarPadronClientes.Designer.vb">
+      <DependentUpon>EditarPadronClientes.vb</DependentUpon>
+    </Compile>
+    <Compile Include="EditarPadronClientes.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="GuardarDGVDB.Designer.vb">
       <DependentUpon>GuardarDGVDB.vb</DependentUpon>
     </Compile>
@@ -156,6 +162,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="EditarPadronClientes.resx">
+      <DependentUpon>EditarPadronClientes.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GuardarDGVDB.resx">
       <DependentUpon>GuardarDGVDB.vb</DependentUpon>
     </EmbeddedResource>

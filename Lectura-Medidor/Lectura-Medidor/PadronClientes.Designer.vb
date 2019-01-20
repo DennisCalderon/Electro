@@ -82,6 +82,7 @@ Partial Class PadronClientes
         Me.dgvmedidor.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvmedidor.Location = New System.Drawing.Point(9, 47)
         Me.dgvmedidor.Name = "dgvmedidor"
+        Me.dgvmedidor.ReadOnly = True
         Me.dgvmedidor.Size = New System.Drawing.Size(783, 369)
         Me.dgvmedidor.TabIndex = 7
         '

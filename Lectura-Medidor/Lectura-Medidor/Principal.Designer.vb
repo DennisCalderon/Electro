@@ -385,8 +385,8 @@ Partial Class Principal
         'ActualizarMedidoresToolStripMenuItem
         '
         Me.ActualizarMedidoresToolStripMenuItem.Name = "ActualizarMedidoresToolStripMenuItem"
-        Me.ActualizarMedidoresToolStripMenuItem.Size = New System.Drawing.Size(115, 20)
-        Me.ActualizarMedidoresToolStripMenuItem.Text = "Actualizar  Padrón"
+        Me.ActualizarMedidoresToolStripMenuItem.Size = New System.Drawing.Size(100, 20)
+        Me.ActualizarMedidoresToolStripMenuItem.Text = "Lista de Padrón"
         '
         'OpcionesToolStripMenuItem
         '

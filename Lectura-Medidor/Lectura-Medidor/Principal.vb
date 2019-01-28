@@ -142,7 +142,7 @@ Public Class Principal
         'MsgBox(tipo_medidor)
         Select Case tipo_medidor
             Case "LP" : lecturaArchivo(dgvcontenido, ruta, " ", 2, 0)
-            Case "pr" : lecturaArchivo(dgvcontenido, ruta, ",", 1, 0)
+            Case "pr" : lecturaArchivo(dgvcontenido, ruta, " ", 1, 0)
             Case "ta" : lecturaArchivo(dgvcontenido, ruta, vbTab, 1, 0)
         End Select
         eliminarPrimeralineaDGV(dgvcontenido)
@@ -255,12 +255,24 @@ Public Class Principal
         'MsgBox(tipo_medidor)
         Select Case tipo_medidor
             Case "pr"
-                fech = CStr(arreglo(1).Substring(1, 8))
+                'MsgBox(arreglo(12))
+                'MsgBox(arreglo(13))
+                'MsgBox(arreglo(14))
+                'MsgBox(arreglo(15))
+                fech = CStr(arreglo(13).Substring(1, 8))
                 fech_hora = CStr(fech.Year) & (If(fech.Month < 10, 0 & fech.Month, fech.Month)) & CStr(If(fech.Day < 10, 0 & fech.Day, fech.Day)) &
-                            (Replace(arreglo(2).Substring(1, 5), ":", ""))
+                            (Replace(arreglo(14).Substring(1, 5), ":", ""))
                 mes = fech.Month
-                Potencia = arreglo(4)
-                EA = ((Val(Potencia) * (Val(Replace(FTEA, ",", ".")) / 4)))
+                Potencia = arreglo(16)
+                'MsgBox(arreglo(16))
+                'MsgBox(Potencia)
+                'EA = Format(Convert.ToDouble((Val(Potencia) * (Val(Replace(FTEA, ",", ".")) / 4))), "##,##")
+                'MsgBox(Format((Val(Potencia) * (Val(Replace(FTEA, ",", ".")) / 4)), "#,00"))
+                Dim resul As String = Val("20.5") * Val("12.3")
+                'MsgBox(resul)
+                'MsgBox(Format(resul, "##0,000"))
+                'MsgBox(Format((Val(Potencia) * (Val(FTEA)) / 4)), "#,00")
+                EA = (Val(Potencia) * (Val(Replace(FTEA, ",", ".")) / 4))
                 'MsgBox(CStr(EA), MsgBoxStyle.Information, "leyendo")
             Case "LP"
                 'MsgBox(arreglo(1)) ' hora    / 12:00:00
@@ -313,7 +325,7 @@ Public Class Principal
                 EA = ((Val(Potencia) * (Val(Replace(FTEA, ",", ".")) / 4)))
                 'MsgBox(CStr(EA), MsgBoxStyle.Information, "leyendo")
         End Select
-        EA = Math.Round(EA, 5)
+        EA = Math.Round(EA, 3)
         tabla.Rows.Add(mes, cod_empresa, IIf(codsuministro = "", "No Existe", codsuministro), cod_barra, fech_hora, CStr(EA))
     End Sub
     Sub eliminarPrimeralineaDGV(ByVal DGV As DataGridView)

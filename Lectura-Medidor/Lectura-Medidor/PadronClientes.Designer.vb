@@ -83,6 +83,7 @@ Partial Class PadronClientes
         Me.dgvmedidor.Location = New System.Drawing.Point(9, 47)
         Me.dgvmedidor.Name = "dgvmedidor"
         Me.dgvmedidor.ReadOnly = True
+        Me.dgvmedidor.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgvmedidor.Size = New System.Drawing.Size(783, 369)
         Me.dgvmedidor.TabIndex = 7
         '

@@ -189,6 +189,7 @@ Module MExportExcel
                 .WriteLine("            </Cell>")
             Next
             .WriteLine("            </Row>")
+
         End With
         fs.Close()
     End Sub
@@ -198,13 +199,34 @@ Module MExportExcel
             For intRow As Integer = 0 To DGV.RowCount - 1
                 Application.DoEvents()
                 .WriteLine("        <Row ss:StyleID=""ksg"" ss:utoFitHeight =""0"">")
-                For intCol As Integer = 0 To DGV.Columns.Count - 1
-                    Application.DoEvents()
-                    .WriteLine("        <Cell ss:StyleID=""isi"">")
-                    .WriteLine("            <Data ss:Type=""String"">{0}</Data>", DGV.Item(intCol, intRow).Value.ToString)
-                    .WriteLine("        </Cell>")
-                Next
+
+                .WriteLine("        <Cell ss:StyleID=""isi"">")
+                .WriteLine("            <Data ss:Type=""Number"">{0}</Data>", DGV.Item(0, intRow).Value.ToString)
+                .WriteLine("        </Cell>")
+                .WriteLine("        <Cell ss:StyleID=""isi"">")
+                .WriteLine("            <Data ss:Type=""String"">{0}</Data>", DGV.Item(1, intRow).Value.ToString)
+                .WriteLine("        </Cell>")
+                .WriteLine("        <Cell ss:StyleID=""isi"">")
+                .WriteLine("            <Data ss:Type=""Number"">{0}</Data>", DGV.Item(2, intRow).Value.ToString)
+                .WriteLine("        </Cell>")
+                .WriteLine("        <Cell ss:StyleID=""isi"">")
+                .WriteLine("            <Data ss:Type=""String"">{0}</Data>", DGV.Item(3, intRow).Value.ToString)
+                .WriteLine("        </Cell>")
+                .WriteLine("        <Cell ss:StyleID=""isi"">")
+                .WriteLine("            <Data ss:Type=""Number"">{0}</Data>", DGV.Item(4, intRow).Value.ToString)
+                .WriteLine("        </Cell>")
+                .WriteLine("        <Cell ss:StyleID=""isi"">")
+                .WriteLine("            <Data ss:Type=""Number"">{0}</Data>", DGV.Item(5, intRow).Value.ToString)
+                .WriteLine("        </Cell>")
+
                 .WriteLine("        </Row>")
+                'For intCol As Integer = 0 To DGV.Columns.Count - 1
+                '    Application.DoEvents()
+                '    .WriteLine("        <Cell ss:StyleID=""isi"">")
+                '    .WriteLine("            <Data ss:Type=""String"">{0}</Data>", DGV.Item(intCol, intRow).Value.ToString)
+                '    .WriteLine("        </Cell>")
+                'Next
+                '.WriteLine("        </Row>")
             Next
             .Close()
         End With

@@ -64,6 +64,7 @@ Partial Class Principal
         Me.OpcionesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AyudaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
         CType(Me.dgvcontenido, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -208,6 +209,7 @@ Partial Class Principal
         '
         'GroupBox4
         '
+        Me.GroupBox4.Controls.Add(Me.Button1)
         Me.GroupBox4.Controls.Add(Me.lblregistros)
         Me.GroupBox4.Controls.Add(Me.Label5)
         Me.GroupBox4.Controls.Add(Me.dgvcontenido)
@@ -404,6 +406,15 @@ Partial Class Principal
         '
         Me.OpenFileDialog1.FileName = "OpenFileDialog1"
         '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(347, 7)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(75, 23)
+        Me.Button1.TabIndex = 15
+        Me.Button1.Text = "Button1"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
         'Principal
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -472,4 +483,5 @@ Partial Class Principal
     Friend WithEvents chkTacna As CheckBox
     Friend WithEvents Label2 As Label
     Friend WithEvents OpcionesToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents Button1 As Button
 End Class

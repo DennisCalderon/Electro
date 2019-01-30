@@ -248,7 +248,7 @@ Public Class Principal
 
         'Dim codsuministro As String = ""
         'Dim FTEA As String = ""
-        Dim EA As Double
+        Dim EA As String
 
         Dim tipo_medidor As String
         tipo_medidor = ruta.Substring(ruta.LastIndexOf(".") + 1, 2)
@@ -259,6 +259,7 @@ Public Class Principal
                 'MsgBox(arreglo(13))
                 'MsgBox(arreglo(14))
                 'MsgBox(arreglo(15))
+                'MsgBox(arreglo(16))
                 fech = CStr(arreglo(13).Substring(1, 8))
                 fech_hora = CStr(fech.Year) & (If(fech.Month < 10, 0 & fech.Month, fech.Month)) & CStr(If(fech.Day < 10, 0 & fech.Day, fech.Day)) &
                             (Replace(arreglo(14).Substring(1, 5), ":", ""))
@@ -268,16 +269,20 @@ Public Class Principal
                 'MsgBox(Potencia)
                 'EA = Format(Convert.ToDouble((Val(Potencia) * (Val(Replace(FTEA, ",", ".")) / 4))), "##,##")
                 'MsgBox(Format((Val(Potencia) * (Val(Replace(FTEA, ",", ".")) / 4)), "#,00"))
-                Dim resul As String = Val("20.5") * Val("12.3")
+                'Dim resul As String = Val("20.5") * Val("12.3")
                 'MsgBox(resul)
                 'MsgBox(Format(resul, "##0,000"))
                 'MsgBox(Format((Val(Potencia) * (Val(FTEA)) / 4)), "#,00")
-                EA = (Val(Potencia) * (Val(Replace(FTEA, ",", ".")) / 4))
+                'EA = (Val(Potencia) * (Val(Replace(FTEA, ",", ".")) / 4))
                 'MsgBox(CStr(EA), MsgBoxStyle.Information, "leyendo")
+                EA = Potencia * FTEA
+                EA = EA / 4
+                EA = Format(Convert.ToDouble(EA), "###0.0000")
+        'MsgBox(EA)
             Case "LP"
                 'MsgBox(arreglo(1)) ' hora    / 12:00:00
                 'MsgBox(arreglo(2)) 'am - fm  / a.m.;
-                'MsgBox(arreglo(3))
+                'MsgBox(arreglo(4))
                 If arreglo(1) = "12:00:00" And arreglo(2) = "a.m.;" Then arreglo(1) = "00:00:00"
                 If arreglo(1) = "12:15:00" And arreglo(2) = "a.m.;" Then arreglo(1) = "00:15:00"
                 If arreglo(1) = "12:30:00" And arreglo(2) = "a.m.;" Then arreglo(1) = "00:30:00"
@@ -297,7 +302,14 @@ Public Class Principal
                 fech_hora = CStr(fech.Year) & (If(fech.Month < 10, 0 & fech.Month, fech.Month)) & CStr(If(fech.Day < 10, 0 & fech.Day, fech.Day)) & (Replace(arreglo(1).Substring(0, 5), ":", ""))
                 mes = fech.Month
                 Potencia = arreglo(4)
-                EA = ((Val(Potencia) * (Val(Replace(FTEA, ",", ".")) / 4)))
+                'EA = ((Val(Potencia) * (Val(Replace(FTEA, ",", ".")) / 4)))
+                'MsgBox(Val(Potencia))
+                'MsgBox(FTEA)
+                'MsgBox(Val(FTEA))
+                'MsgBox(Val(Potencia) * Val(FTEA))
+                EA = (Val(Potencia) * Val(FTEA)) / 4
+                'MsgBox(EA)
+                EA = Format(Convert.ToDouble(EA), "###0.0000")
             Case "ta"
                 'MsgBox(arreglo(1)) ' hora y am - fm / 04:45 a.m.
                 'MsgBox(arreglo(2))
@@ -322,11 +334,13 @@ Public Class Principal
                 mes = fech.Month
                 Potencia = arreglo(3)
                 'consulta(CStr(id_medidor), codsuministro, FTEA)
-                EA = ((Val(Potencia) * (Val(Replace(FTEA, ",", ".")) / 4)))
+                'EA = ((Val(Potencia) * (Val(Replace(FTEA, ",", ".")) / 4)))
                 'MsgBox(CStr(EA), MsgBoxStyle.Information, "leyendo")
+                EA = (Val(Potencia) * Val(FTEA)) / 4
+                EA = Format(Convert.ToDouble(EA), "###0.0000")
         End Select
-        EA = Math.Round(EA, 3)
-        tabla.Rows.Add(mes, cod_empresa, IIf(codsuministro = "", "No Existe", codsuministro), cod_barra, fech_hora, CStr(EA))
+        EA = Replace(EA, ",", ".")
+        tabla.Rows.Add(mes, cod_empresa, IIf(codsuministro = "", "No Existe", codsuministro), cod_barra, fech_hora, EA)
     End Sub
     Sub eliminarPrimeralineaDGV(ByVal DGV As DataGridView)
         If (DGV.Item(4, 0).Value.ToString().Substring(8, 4) = "0000") Then
@@ -804,5 +818,15 @@ Public Class Principal
     Private Sub AyudaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AyudaToolStripMenuItem.Click
         Dim form As New Soporte
         form.ShowDialog()
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Dim num1 As String = "20,3", num2 As String = "0,000056"
+        Dim num3 As String = ""
+        num3 = num1 * num2
+        MsgBox(num3)
+        MsgBox(num3 / 4)
+        Dim num4 As Double = num3
+        MsgBox(Format(num4, "###0.0000"))
     End Sub
 End Class
